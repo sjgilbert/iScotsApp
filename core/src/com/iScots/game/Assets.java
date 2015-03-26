@@ -25,7 +25,7 @@ public class Assets {
     public static Texture loadTexture(String file) { return new Texture(Gdx.files.internal(file));}
 
     public static void load() {
-        gameScreen = loadTexture("background.jpg");
+        gameScreen = loadTexture("background.png");
         gameScreenRegion = new TextureRegion(gameScreen);
 
         pet0 = new Texture("pet0.png");
