@@ -11,19 +11,25 @@ public class Assets {
     public static Texture gameScreen;
     public static TextureRegion gameScreenRegion;
 
-    public static Texture happyPet;
-    public static Texture sadPet;
-    public static Texture distraughtPet;
+    public static Texture pet0;
+    public static Texture pet1;
+    public static Texture pet2;
+    public static Texture pet3;
+    public static Texture pet4;
+    public static Texture pet5;
 
     public static Texture loadTexture(String file) { return new Texture(Gdx.files.internal(file));}
 
     public static void load() {
-        gameScreen = loadTexture("demopic.jpg");
+        gameScreen = loadTexture("background.jpg");
         gameScreenRegion = new TextureRegion(gameScreen);
 
-        happyPet = new Texture("happypet.png");
-        sadPet = new Texture("sadpet.png");
-        distraughtPet = new Texture("distraughtpet.png");
+        pet0 = new Texture("pet0.png");
+        pet1 = new Texture("pet1.png");
+        pet2 = new Texture("pet2.png");
+        pet3 = new Texture("pet3.png");
+        pet4 = new Texture("pet4.png");
+        pet5 = new Texture("pet5.png");
     }
 }
 
