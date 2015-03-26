@@ -22,17 +22,17 @@ public class Pet {
 
     public void update(String action) {
         if (action.equals("sleep")) {
-            if (tiredness > 0 && tiredness <= 100) { tiredness += 20;}
-            if (hunger > 0 && hunger <= 100) { hunger -= 10;}
-            if (happiness > 0 && happiness <= 100) { happiness -= 10;}
+            if (tiredness < 100) { tiredness += 10;}
+            if (hunger > 0) { hunger -= 10;}
+            if (happiness > 0) { happiness -= 10;}
         } else if (action.equals("feed")) {
-            if (tiredness > 0 && tiredness <= 100) { tiredness -= 10;}
-            if (hunger > 0 && hunger <= 100) { hunger += 10;}
-            if (happiness > 0 && happiness <= 100) { happiness -= 10;}
+            if (tiredness > 0) { tiredness -= 10;}
+            if (hunger < 100) { hunger += 10;}
+            if (happiness > 0) { happiness -= 10;}
         } else if (action.equals("play")) {
-            if (tiredness > 0 && tiredness <= 100) { tiredness -= 10;}
-            if (hunger > 0 && hunger <= 100) { hunger -= 10;}
-            if (happiness > 0 && happiness <= 100) { hunger += 20;}
+            if (tiredness > 0) { tiredness -= 10;}
+            if (hunger > 0) { hunger -= 10;}
+            if (happiness < 100) { hunger += 10;}
         }
         else {
             System.out.println("illegal argument");
