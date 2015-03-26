@@ -18,20 +18,22 @@ public class GameScreen extends ScreenAdapter {
     Rectangle playBounds;
     Rectangle eatBounds;
     Rectangle sleepBounds;
-    Texture button;
+    Texture bar;
+    Texture redBar;
     Vector3 touchPoint;
+    Pet gamePet;
 
-    boolean petState = false;
 
     public GameScreen(IScotGame game) {
         this.game = game;
-
         guiCam = new OrthographicCamera(300,900);
         playBounds = new Rectangle(-150, -450, 100, 100);
         eatBounds = new Rectangle(-50, -450, 100, 100);
-        sleepBounds = new Rectangle(150, -450, 100, 100);
+        sleepBounds = new Rectangle(50, -450, 100, 100);
         touchPoint = new Vector3();
-        button = new Texture("Rectangle.png");
+        bar = new Texture("Rectangle.png");
+        redBar = new Texture("Redtangle.png");
+        gamePet = new Pet();
 
     }
 
@@ -40,16 +42,18 @@ public class GameScreen extends ScreenAdapter {
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             System.out.print(touchPoint);
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                petState = !petState;
                 System.out.println("play");
+                gamePet.update("play");
             }
 
             if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
-                System.out.println("eat");
+                System.out.println("feed");
+                gamePet.update("feed");
             }
 
             if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("sleep");
+                gamePet.update("sleep");
             }
 
         }
@@ -64,16 +68,14 @@ public class GameScreen extends ScreenAdapter {
         game.batch.enableBlending();
         game.batch.begin();
         game.batch.draw(Assets.gameScreen, -150, -450, 300, 900); //Last two must always be the same as camera size!
-        game.batch.draw(petState ? Assets.happyPet : Assets.sadPet,-50,-100, 100, 200);
-        //game.batch.draw(button, -150, -450, 100, 100);
-        game.batch.draw(button, -50, -450, 100, 100);
-        //game.batch.draw(button, 150, -450, 100, 100);
+        game.batch.draw(redBar, -150, 300, 300, 50);
+        game.batch.draw(redBar, -150, 200, 300, 50);
+        game.batch.draw(redBar, -150, 100, 300, 50);
+        game.batch.draw(bar, -150, 300, 300*(gamePet.getHappiness()/100), 50);
+        game.batch.draw(bar, -150, 200, 300*(gamePet.getHunger()/100), 50);
+        game.batch.draw(bar, -150, 100, 300*(gamePet.getTiredness()/100), 50);
         game.batch.end();
-//        ShapeRenderer drawer = new ShapeRenderer()
-//        drawer.setAutoShapeType(true);
-//        drawer.begin();
-//        drawer.rect(0,0,64,64);
-//        drawer.end();
+
     }
 
     @Override
