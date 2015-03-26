@@ -34,7 +34,6 @@ public class GameScreen extends ScreenAdapter {
         bar = new Texture("Rectangle.png");
         redBar = new Texture("Redtangle.png");
         gamePet = new Pet();
-
     }
 
     public void update() {
@@ -55,7 +54,6 @@ public class GameScreen extends ScreenAdapter {
                 System.out.println("sleep");
                 gamePet.update("sleep");
             }
-
         }
     }
 
@@ -68,12 +66,13 @@ public class GameScreen extends ScreenAdapter {
         game.batch.enableBlending();
         game.batch.begin();
         game.batch.draw(Assets.gameScreen, -150, -450, 300, 900); //Last two must always be the same as camera size!
-        game.batch.draw(redBar, -150, 300, 300, 50);
-        game.batch.draw(redBar, -150, 200, 300, 50);
-        game.batch.draw(redBar, -150, 100, 300, 50);
-        game.batch.draw(bar, -150, 300, 300*(gamePet.getHappiness()/100), 50);
-        game.batch.draw(bar, -150, 200, 300*(gamePet.getHunger()/100), 50);
-        game.batch.draw(bar, -150, 100, 300*(gamePet.getTiredness()/100), 50);
+        game.batch.draw(redBar, -140, 300, 280, 50);
+        game.batch.draw(redBar, -140, 200, 280, 50);
+        game.batch.draw(redBar, -140, 100, 280, 50);
+        game.batch.draw(bar, -140, 300, 280*(gamePet.getHappiness()/100), 50);
+        game.batch.draw(bar, -140, 200, 280*(gamePet.getHunger()/100), 50);
+        game.batch.draw(bar, -140, 100, 280*(gamePet.getTiredness()/100), 50);
+        game.batch.draw(gamePet.getPetImage(), -50, -200, 100, 200);
         game.batch.end();
 
     }
@@ -83,5 +82,6 @@ public class GameScreen extends ScreenAdapter {
         update();
         draw();
     }
+
 
 }
