@@ -18,6 +18,10 @@ public class Assets {
     public static Texture pet4;
     public static Texture pet5;
 
+    public static Texture ball;
+    public static Texture bed;
+    public static Texture bone;
+
     public static Texture loadTexture(String file) { return new Texture(Gdx.files.internal(file));}
 
     public static void load() {
@@ -30,6 +34,10 @@ public class Assets {
         pet3 = new Texture("pet3.png");
         pet4 = new Texture("pet4.png");
         pet5 = new Texture("pet5.png");
+
+        ball = new Texture("ball.png");
+        bone = new Texture("bone.png");
+        bed = new Texture("bed.png");
     }
 }
 
