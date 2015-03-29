@@ -27,9 +27,9 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(IScotGame game) {
         this.game = game;
         guiCam = new OrthographicCamera(300,900);
-        playBounds = new Rectangle(-150, -450, 100, 100);
-        eatBounds = new Rectangle(-50, -450, 100, 100);
-        sleepBounds = new Rectangle(50, -450, 100, 100);
+        playBounds = new Rectangle(-150, -450, 100, 200);
+        eatBounds = new Rectangle(-50, -450, 100, 200);
+        sleepBounds = new Rectangle(50, -450, 100, 200);
         touchPoint = new Vector3();
         bar = new Texture("Rectangle.png");
         redBar = new Texture("Redtangle.png");
