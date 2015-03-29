@@ -27,9 +27,9 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(IScotGame game) {
         this.game = game;
         guiCam = new OrthographicCamera(300,900);
-        playBounds = new Rectangle(-150, -450, 100, 200);
-        eatBounds = new Rectangle(-50, -450, 100, 200);
-        sleepBounds = new Rectangle(50, -450, 100, 200);
+        playBounds = new Rectangle(-150, -450, 75, 150);
+        eatBounds = new Rectangle(-38, -450, 75, 150);
+        sleepBounds = new Rectangle(75, -450, 75, 150);
         touchPoint = new Vector3();
         bar = new Texture("Rectangle.png");
         redBar = new Texture("Redtangle.png");
@@ -66,19 +66,19 @@ public class GameScreen extends ScreenAdapter {
         game.batch.enableBlending();
         game.batch.begin();
         game.batch.draw(Assets.gameScreen, -150, -450, 300, 900); //Last two must always be the same as camera size!
-        game.batch.draw(Assets.ball, -150, -450, 100, 200);
-        game.batch.draw(Assets.bone, -50, -450, 100, 200);
-        game.batch.draw(Assets.bed, 50, -450, 100, 200);
+        game.batch.draw(Assets.ball, -150, -450, 75, 150);
+        game.batch.draw(Assets.bone, -38, -450, 75, 150);
+        game.batch.draw(Assets.bed, 75, -450, 75, 150);
 
 
 
-        game.batch.draw(redBar, -140, 300, 280, 50);
-        game.batch.draw(redBar, -140, 200, 280, 50);
-        game.batch.draw(redBar, -140, 100, 280, 50);
-        game.batch.draw(bar, -140, 300, 280*(gamePet.getHappiness()/100), 50);
-        game.batch.draw(bar, -140, 200, 280*(gamePet.getHunger()/100), 50);
-        game.batch.draw(bar, -140, 100, 280*(gamePet.getTiredness()/100), 50);
-        game.batch.draw(gamePet.getPetImage(), -100, -250, 200, 400);
+        game.batch.draw(redBar, -120, 350, 240, 50);
+        game.batch.draw(redBar, -120, 250, 240, 50);
+        game.batch.draw(redBar, -120, 150, 240, 50);
+        game.batch.draw(bar, -120, 350, 240*(gamePet.getHappiness()/100), 50);
+        game.batch.draw(bar, -120, 250, 240*(gamePet.getHunger()/100), 50);
+        game.batch.draw(bar, -120, 150, 240*(gamePet.getTiredness()/100), 50);
+        game.batch.draw(gamePet.getPetImage(), -100, -400, 200, 800);
         game.batch.end();
 
     }
