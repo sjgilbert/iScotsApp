@@ -66,9 +66,9 @@ public class GameScreen extends ScreenAdapter {
         game.batch.enableBlending();
         game.batch.begin();
         game.batch.draw(Assets.gameScreen, -150, -450, 300, 900); //Last two must always be the same as camera size!
-        game.batch.draw(Assets.ball, -150, -450, 100, 100);
-        game.batch.draw(Assets.bone, -50, -450, 100, 100);
-        game.batch.draw(Assets.bed, 50, -450, 100, 100);
+        game.batch.draw(Assets.ball, -150, -450, 100, 200);
+        game.batch.draw(Assets.bone, -50, -450, 100, 200);
+        game.batch.draw(Assets.bed, 50, -450, 100, 200);
 
 
 
@@ -78,7 +78,7 @@ public class GameScreen extends ScreenAdapter {
         game.batch.draw(bar, -140, 300, 280*(gamePet.getHappiness()/100), 50);
         game.batch.draw(bar, -140, 200, 280*(gamePet.getHunger()/100), 50);
         game.batch.draw(bar, -140, 100, 280*(gamePet.getTiredness()/100), 50);
-        game.batch.draw(gamePet.getPetImage(), -50, -200, 100, 200);
+        game.batch.draw(gamePet.getPetImage(), -100, -250, 200, 400);
         game.batch.end();
 
     }
