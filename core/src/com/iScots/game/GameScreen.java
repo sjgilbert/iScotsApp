@@ -5,7 +5,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -23,6 +22,7 @@ public class GameScreen extends ScreenAdapter {
     Vector3 touchPoint;
     Pet gamePet;
 
+    Texture blackBar;
 
     public GameScreen(IScotGame game) {
         this.game = game;
@@ -34,6 +34,7 @@ public class GameScreen extends ScreenAdapter {
         bar = new Texture("Rectangle.png");
         redBar = new Texture("Redtangle.png");
         gamePet = new Pet();
+        blackBar = new Texture("blackSquare.png");
     }
 
     public void update() {
@@ -43,16 +44,19 @@ public class GameScreen extends ScreenAdapter {
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("play");
                 gamePet.update("play");
+                return;
             }
 
             if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("feed");
                 gamePet.update("feed");
+                return;
             }
 
             if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("sleep");
                 gamePet.update("sleep");
+                return;
             }
         }
     }
@@ -72,12 +76,24 @@ public class GameScreen extends ScreenAdapter {
 
 
 
-        game.batch.draw(redBar, -120, 350, 240, 50);
-        game.batch.draw(redBar, -120, 250, 240, 50);
-        game.batch.draw(redBar, -120, 150, 240, 50);
-        game.batch.draw(bar, -120, 350, 240*(gamePet.getHappiness()/100), 50);
-        game.batch.draw(bar, -120, 250, 240*(gamePet.getHunger()/100), 50);
-        game.batch.draw(bar, -120, 150, 240*(gamePet.getTiredness()/100), 50);
+//        game.batch.draw(redBar, -120, 350, 240, 50);
+//        game.batch.draw(redBar, -120, 250, 240, 50);
+//        game.batch.draw(redBar, -120, 150, 240, 50);
+
+        game.batch.draw(redBar, -120, 350, 120, 50);
+        game.batch.draw(redBar, -120, 250, 120, 50);
+        game.batch.draw(redBar, -120, 150, 120, 50);
+        game.batch.draw(bar, 0, 350, 120, 50);
+        game.batch.draw(bar, 0, 250, 120, 50);
+        game.batch.draw(bar, 0, 150, 120, 50);
+
+        game.batch.draw(blackBar, 40*gamePet.getHappiness(), 350, 1, 50);
+        game.batch.draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
+        game.batch.draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
+
+//        game.batch.draw(bar, -120, 350, 240*(gamePet.getHappiness()/100), 50);
+//        game.batch.draw(bar, -120, 250, 240*(gamePet.getHunger()/100), 50);
+//        game.batch.draw(bar, -120, 150, 240*(gamePet.getTiredness()/100), 50);
         game.batch.draw(gamePet.getPetImage(), -100, -400, 200, 800);
         game.batch.end();
 

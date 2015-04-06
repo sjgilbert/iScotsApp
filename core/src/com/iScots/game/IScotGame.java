@@ -17,7 +17,7 @@ public class IScotGame extends Game {
 	public void create () {
 		batch = new SpriteBatch();
         Assets.load();
-		setScreen(new GameScreen(this));
+		setScreen(new MainMenuScreen(this));
         startTime = System.currentTimeMillis()/1000;
         currentTime = System.currentTimeMillis()/1000;
 	}

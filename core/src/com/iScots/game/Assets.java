@@ -11,6 +11,9 @@ public class Assets {
     public static Texture gameScreen;
     public static TextureRegion gameScreenRegion;
 
+    public static Texture mainMenuScreen;
+    public static Texture settingsScreen;
+
     public static Texture pet0;
     public static Texture pet1;
     public static Texture pet2;
@@ -27,6 +30,8 @@ public class Assets {
     public static void load() {
         gameScreen = loadTexture("background.png");
         gameScreenRegion = new TextureRegion(gameScreen);
+
+        mainMenuScreen = new Texture("mainMenuScreen.png");
 
         pet0 = new Texture("pet0.png");
         pet1 = new Texture("pet1.png");
