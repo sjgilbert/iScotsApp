@@ -101,6 +101,11 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void render (float delta) {
+        game.currentTime = System.currentTimeMillis()/1000;
+        if (game.currentTime - game.lastTime > 1){  //Provide time in seconds.
+            game.lastTime = game.currentTime;
+            gamePet.decrease();
+        }
         update();
         draw();
     }

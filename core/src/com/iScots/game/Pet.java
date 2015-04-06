@@ -75,6 +75,12 @@ public class Pet {
         return tiredness;
     }
 
+    public void decrease(){
+        if (tiredness > -3) { tiredness -= 0.2 * multiplier(tiredness);}
+        if (hunger > -3) { hunger -= 0.2*multiplier(hunger);}
+        if (happiness > -3) { happiness -= 0.2*multiplier(happiness);}
+    }
+
     private void setPetImage(Texture texture) {
         petImage = texture;
     }

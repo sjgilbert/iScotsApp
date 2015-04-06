@@ -11,6 +11,7 @@ public class IScotGame extends Game {
 	public SpriteBatch batch;
 	public long startTime;
     public long currentTime;
+    public long lastTime;
 
 
 	@Override
@@ -19,6 +20,7 @@ public class IScotGame extends Game {
         Assets.load();
 		setScreen(new MainMenuScreen(this));
         startTime = System.currentTimeMillis()/1000;
+        lastTime = System.currentTimeMillis()/1000;
         currentTime = System.currentTimeMillis()/1000;
 	}
 
