@@ -13,12 +13,19 @@ public class IScotGame extends Game {
     public long currentTime;
     public long lastTime;
 
+    private MainMenuScreen mainMenuScreen;
+
+    private GameScreen gameScreen;
+    private SettingsScreen settingsScreen;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
         Assets.load();
-		setScreen(new MainMenuScreen(this));
+        mainMenuScreen = new MainMenuScreen(this);
+        gameScreen = new GameScreen(this);
+        settingsScreen = new SettingsScreen(this);
+		setScreen(mainMenuScreen);
         startTime = System.currentTimeMillis()/1000;
         lastTime = System.currentTimeMillis()/1000;
         currentTime = System.currentTimeMillis()/1000;
@@ -28,4 +35,21 @@ public class IScotGame extends Game {
 	public void render () {
         super.render();
 	}
+
+    public MainMenuScreen getMainMenuScreen() {
+        return mainMenuScreen;
+    }
+
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
+    public SettingsScreen getSettingsScreen() {
+        return settingsScreen;
+    }
+
+    public void setGameScreen(GameScreen screen) {
+        gameScreen = screen;
+    }
 }
+

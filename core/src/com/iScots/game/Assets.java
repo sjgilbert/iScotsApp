@@ -32,6 +32,7 @@ public class Assets {
         gameScreenRegion = new TextureRegion(gameScreen);
 
         mainMenuScreen = new Texture("mainMenuScreen.png");
+        settingsScreen = new Texture("settingsScreen.png");
 
         pet0 = new Texture("pet0.png");
         pet1 = new Texture("pet1.png");

@@ -33,7 +33,9 @@ public class MainMenuScreen extends ScreenAdapter{
 
             if (startBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("start");
-                game.setScreen(new GameScreen(game));
+                GameScreen screen = new GameScreen(game);
+                game.setGameScreen(screen);
+                game.setScreen(screen);
                 return;
             }
 

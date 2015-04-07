@@ -17,6 +17,7 @@ public class GameScreen extends ScreenAdapter {
     Rectangle playBounds;
     Rectangle eatBounds;
     Rectangle sleepBounds;
+    Rectangle settingsBounds;
     Texture bar;
     Texture redBar;
     Vector3 touchPoint;
@@ -30,6 +31,7 @@ public class GameScreen extends ScreenAdapter {
         playBounds = new Rectangle(-150, -450, 75, 150);
         eatBounds = new Rectangle(-38, -450, 75, 150);
         sleepBounds = new Rectangle(75, -450, 75, 150);
+        settingsBounds = new Rectangle(120, 420, 30, 30);
         touchPoint = new Vector3();
         bar = new Texture("Rectangle.png");
         redBar = new Texture("Redtangle.png");
@@ -56,6 +58,12 @@ public class GameScreen extends ScreenAdapter {
             if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("sleep");
                 gamePet.update("sleep");
+                return;
+            }
+
+            if (settingsBounds.contains(touchPoint.x, touchPoint.y)) {
+                System.out.println("settings");
+                game.setScreen(game.getSettingsScreen());
                 return;
             }
         }
@@ -90,6 +98,8 @@ public class GameScreen extends ScreenAdapter {
         game.batch.draw(blackBar, 40*gamePet.getHappiness(), 350, 1, 50);
         game.batch.draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
         game.batch.draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
+
+        game.batch.draw(redBar, 120, 420, 30, 30);
 
 //        game.batch.draw(bar, -120, 350, 240*(gamePet.getHappiness()/100), 50);
 //        game.batch.draw(bar, -120, 250, 240*(gamePet.getHunger()/100), 50);
