@@ -27,15 +27,9 @@ public class Pet {
     public void update(String action) {
         if (action.equals("sleep")) {
             if (tiredness < 3) { tiredness += 0.2*multiplier(tiredness);}
-            if (hunger > -3) { hunger -= 0.2*multiplier(hunger);}
-            if (happiness > -3) { happiness -= 0.2*multiplier(happiness);}
         } else if (action.equals("feed")) {
-            if (tiredness > -3) { tiredness -= 0.2 * multiplier(tiredness);}
             if (hunger < 3) { hunger += 0.2 * multiplier(hunger);}
-            if (happiness > -3) { happiness -= 0.2 * multiplier(happiness);}
         } else if (action.equals("play")) {
-            if (tiredness > -3) { tiredness -= 0.2 * multiplier(tiredness);}
-            if (hunger > -3) { hunger -= 0.2 * multiplier(hunger);}
             if (happiness < 3) { happiness += 0.2 * multiplier(happiness);}
         }
         else {
