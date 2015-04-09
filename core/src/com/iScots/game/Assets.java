@@ -25,6 +25,8 @@ public class Assets {
     public static Texture bed;
     public static Texture bone;
 
+    public static Texture hungerLabel;
+
     public static Texture loadTexture(String file) { return new Texture(Gdx.files.internal(file));}
 
     public static void load() {
@@ -44,6 +46,8 @@ public class Assets {
         ball = new Texture("ball.png");
         bone = new Texture("bone.png");
         bed = new Texture("bed.png");
+
+        hungerLabel = new Texture("hunger.png");
     }
 }
 

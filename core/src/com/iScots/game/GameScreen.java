@@ -84,10 +84,6 @@ public class GameScreen extends ScreenAdapter {
 
 
 
-//        game.batch.draw(redBar, -120, 350, 240, 50);
-//        game.batch.draw(redBar, -120, 250, 240, 50);
-//        game.batch.draw(redBar, -120, 150, 240, 50);
-
         game.batch.draw(redBar, -120, 350, 120, 50);
         game.batch.draw(redBar, -120, 250, 120, 50);
         game.batch.draw(redBar, -120, 150, 120, 50);
@@ -101,9 +97,6 @@ public class GameScreen extends ScreenAdapter {
 
         game.batch.draw(redBar, 120, 420, 30, 30);
 
-//        game.batch.draw(bar, -120, 350, 240*(gamePet.getHappiness()/100), 50);
-//        game.batch.draw(bar, -120, 250, 240*(gamePet.getHunger()/100), 50);
-//        game.batch.draw(bar, -120, 150, 240*(gamePet.getTiredness()/100), 50);
         game.batch.draw(gamePet.getPetImage(), -100, -400, 200, 800);
         game.batch.end();
 
