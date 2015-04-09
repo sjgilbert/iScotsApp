@@ -16,7 +16,7 @@ public class SettingsScreen extends ScreenAdapter {
     OrthographicCamera guiCam;
     Vector3 touchPoint;
 
-    Texture backButton = new Texture("redtangle.png");
+    Texture backButton = new Texture("Redtangle.png");
     Rectangle backBounds = new Rectangle(-150, 420, 30, 30);
 
     public SettingsScreen(IScotGame game) {

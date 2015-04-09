@@ -22,6 +22,7 @@ public class GameScreen extends ScreenAdapter {
     Texture redBar;
     Vector3 touchPoint;
     Pet gamePet;
+    Texture hungerLabel;
 
     Texture blackBar;
 
@@ -37,6 +38,7 @@ public class GameScreen extends ScreenAdapter {
         redBar = new Texture("Redtangle.png");
         gamePet = new Pet();
         blackBar = new Texture("blackSquare.png");
+        hungerLabel = new Texture("hunger.png");
     }
 
     public void update() {
@@ -90,6 +92,10 @@ public class GameScreen extends ScreenAdapter {
         game.batch.draw(bar, 0, 350, 120, 50);
         game.batch.draw(bar, 0, 250, 120, 50);
         game.batch.draw(bar, 0, 150, 120, 50);
+
+
+        //The labels for the status bars.
+        game.batch.draw(hungerLabel, -120, 250, 30, 20);
 
         game.batch.draw(blackBar, 40*gamePet.getHappiness(), 350, 1, 50);
         game.batch.draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
