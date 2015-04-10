@@ -34,8 +34,10 @@ public class GameScreen extends ScreenAdapter {
     Rectangle sleepBounds;
     Rectangle settingsBounds;
 
+    Texture happinessLabel;
     Texture hungerLabel;
-    
+    Texture fatigueLabel;
+
     /**
      * Initializes the screen.
      * @param game The game that the Screen belongs to.  Necessary for referencing the SpriteBatch.
@@ -58,6 +60,11 @@ public class GameScreen extends ScreenAdapter {
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
         settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
+
+        happinessLabel = new Texture("happiness.png");
+        hungerLabel = new Texture("hunger.png");
+        fatigueLabel = new Texture("fatigue.png");
+
     }
 
     /**
@@ -131,8 +138,10 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
         game.getBatch().draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
 
-        //The labels for the status bars.
-        game.getBatch().draw(hungerLabel, -120, 250, 30, 20);
+        //The labels for the status bar
+        game.getBatch().draw(happinessLabel, -120, 350, 60, 50);
+        game.getBatch().draw(hungerLabel, -122, 245, 60, 60);
+        game.getBatch().draw(fatigueLabel, -120, 150, 60, 50);
         
         //The settings button in the upper right corner.
         game.getBatch().draw(settingsButton, 120, 420, 30, 30);
