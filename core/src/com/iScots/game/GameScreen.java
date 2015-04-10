@@ -18,7 +18,7 @@ public class GameScreen extends ScreenAdapter {
     IScotGame game;
     OrthographicCamera guiCam;
     Vector3 touchPoint;         //Used for touch handling.
-    Pet gamePet;
+    Pet gamePet;    //The pet for the game.
 
     //The textures used to draw the status bars.
     Texture greenBar;
@@ -34,6 +34,8 @@ public class GameScreen extends ScreenAdapter {
     Rectangle sleepBounds;
     Rectangle settingsBounds;
 
+    Texture hungerLabel;
+    
     /**
      * Initializes the screen.
      * @param game The game that the Screen belongs to.  Necessary for referencing the SpriteBatch.
@@ -129,6 +131,9 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
         game.getBatch().draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
 
+        //The labels for the status bars.
+        game.getBatch().draw(hungerLabel, -120, 250, 30, 20);
+        
         //The settings button in the upper right corner.
         game.getBatch().draw(settingsButton, 120, 420, 30, 30);
 

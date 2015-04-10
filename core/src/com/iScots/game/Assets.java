@@ -28,6 +28,7 @@ public class Assets {
     public static Texture bone;
     public static Texture bed;
 
+    public static Texture hungerLabel;
     /**
      *Loads in all the assets when the app starts.
      */
@@ -50,6 +51,8 @@ public class Assets {
         ball = new Texture("ball.png");
         bone = new Texture("bone.png");
         bed = new Texture("bed.png");
+
+        hungerLabel = new Texture("hunger.png");
     }
 }
 
