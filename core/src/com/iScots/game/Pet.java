@@ -7,16 +7,20 @@ import java.util.Random;
 
 /**
  * Created by Christopher on 3/23/2015.
+ * The pet for the game.  Controls all of the game logic and keeps track of the attributes.
  */
 public class Pet {
-    private float hunger;
+    //The three attributes
     private float happiness;
+    private float hunger;
     private float tiredness;
 
+    //The image of the pet currently being displayed
     private Texture petImage;
 
-    Random rand = new Random();
-
+    /**
+     * Currently initializing to testing values.
+     */
     public Pet() {
         this.hunger = 1.0f;
         this.happiness = 2.8f;
@@ -24,6 +28,10 @@ public class Pet {
         this.petImage = Assets.pet5;
     }
 
+    /**
+     *
+     * @param action The command passed to determine which attribute to increase.
+     */
     public void update(String action) {
         if (action.equals("sleep")) {
             if (tiredness < 3) { tiredness += 0.2*multiplier(tiredness);}
@@ -35,19 +43,30 @@ public class Pet {
         else {
             System.out.println("illegal argument");
         }
+        //These lines are to make sure the attributes don't go out of bounds.
         if (happiness < -3) {happiness = -3;}
         else if (happiness > 3) {happiness = 3;}
         if (hunger < -3) {hunger = -3;}
         else if (hunger > 3) {hunger = 3;}
         if (tiredness < -3) {tiredness = -3;}
         else if (tiredness > 3) {tiredness = 3;}
-        updateState();
+
+        updateState(); //to set the proper image.
     }
 
+    /**
+     * A number used to shift the values of the attributes.  It is the function of the normal distribution.
+     * @param x The value of the attribute being altered.
+     * @return
+     */
         public float multiplier(float x) {
             return (float) (1/Math.sqrt(2*Math.PI)*Math.exp(-Math.pow(-x,2)/(2*1.5)));
         }
 
+    /**
+     * Sets the state of the pet.  Currently only sets based on happiness.
+     * TODO: implement a better system for changing the pet's image.
+     */
         private void updateState() {
             if (happiness < -2) {setPetImage(Assets.pet0);}
             else if (happiness < -1) {setPetImage(Assets.pet1);}

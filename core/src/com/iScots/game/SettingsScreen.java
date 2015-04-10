@@ -10,13 +10,15 @@ import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Sam on 4/5/2015.
+ * The settings Screen.  Currently a placeholder.  Only has a button in the
+ * upper left corner that sets the screen to gameScreen.
  */
 public class SettingsScreen extends ScreenAdapter {
     IScotGame game;
     OrthographicCamera guiCam;
-    Vector3 touchPoint;
+    Vector3 touchPoint;     //For touch
 
-    Texture backButton = new Texture("redtangle.png");
+    Texture backButton = Assets.redBar; //For the gameScreen (back) button.
     Rectangle backBounds = new Rectangle(-150, 420, 30, 30);
 
     public SettingsScreen(IScotGame game) {
@@ -25,6 +27,9 @@ public class SettingsScreen extends ScreenAdapter {
         touchPoint = new Vector3();
     }
 
+    /**
+     * Currently only allows the user to go back to the game.
+     */
     public void update() {
         if (Gdx.input.justTouched()) {
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
@@ -38,20 +43,23 @@ public class SettingsScreen extends ScreenAdapter {
         }
     }
 
+    /**
+     * Currently only draws the background and a placeholder for the back button.
+     */
     public void draw() {
         GL20 gl = Gdx.gl;
         gl.glClearColor(1, 1, 1, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         guiCam.update();
-        game.batch.setProjectionMatrix(guiCam.combined);
-        game.batch.enableBlending();
+        game.getBatch().setProjectionMatrix(guiCam.combined);
+        game.getBatch().enableBlending();
+        game.getBatch().begin();
 
-        game.batch.begin();
-        game.batch.draw(Assets.settingsScreen, -150, -450, 300, 900); //Last two must always be the same as camera size!
+        game.getBatch().draw(Assets.settingsScreen, -150, -450, 300, 900); //The background.  Last two must always be the same as camera size!
 
-        game.batch.draw(backButton, -150, 420, 30, 30);
+        game.getBatch().draw(backButton, -150, 420, 30, 30); //The back button
 
-        game.batch.end();
+        game.getBatch().end();
     }
 
     @Override

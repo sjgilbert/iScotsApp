@@ -7,25 +7,38 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * The main game class. Has all of the screens.  //TODO:Christopher please comment!
+ * Much of the screen architecture, touchpoint handling, drawing, rendering and updating method structure
+ * of this game was found in the libgdx demo code at https://github.com/libgdx/libgdx-demo-superjumper
+ */
 public class IScotGame extends Game {
-	public SpriteBatch batch;
+	private SpriteBatch batch;  //The SpriteBatch used to draw all the graphics for the game.
+
 	public long startTime;
     public long currentTime;
     public long lastTime;
 
+    //The three screens for the game.
     private MainMenuScreen mainMenuScreen;
-
     private GameScreen gameScreen;
     private SettingsScreen settingsScreen;
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-        Assets.load();
+		batch = new SpriteBatch();  //The spritebatch used to draw everything
+
+        Assets.load();  //Loads in the assets
+
+        //Creating the screens
         mainMenuScreen = new MainMenuScreen(this);
         gameScreen = new GameScreen(this);
         settingsScreen = new SettingsScreen(this);
+
+        //Setting the initial screen
 		setScreen(mainMenuScreen);
+
+        //TODO: Christopher please comment!
         startTime = System.currentTimeMillis()/1000;
         lastTime = System.currentTimeMillis()/1000;
         currentTime = System.currentTimeMillis()/1000;
@@ -48,8 +61,6 @@ public class IScotGame extends Game {
         return settingsScreen;
     }
 
-    public void setGameScreen(GameScreen screen) {
-        gameScreen = screen;
-    }
+    public SpriteBatch getBatch() { return batch;}
 }
 
