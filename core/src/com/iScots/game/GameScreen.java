@@ -139,9 +139,9 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
 
         //The labels for the status bar
-        game.getBatch().draw(happinessLabel, -120, 350, 60, 50);
-        game.getBatch().draw(hungerLabel, -122, 245, 60, 60);
-        game.getBatch().draw(fatigueLabel, -120, 150, 60, 50);
+        game.getBatch().draw(happinessLabel, -120, 350, 25, 50);
+        game.getBatch().draw(hungerLabel, -120, 250, 25, 50);
+        game.getBatch().draw(fatigueLabel, -120, 150, 25, 50);
         
         //The settings button in the upper right corner.
         game.getBatch().draw(settingsButton, 120, 420, 30, 30);
