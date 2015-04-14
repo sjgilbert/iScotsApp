@@ -35,7 +35,9 @@ public class GameScreen extends ScreenAdapter {
     Rectangle sleepBounds;
     Rectangle settingsBounds;
 
+    Texture happinessLabel;
     Texture hungerLabel;
+    Texture fatigueLabel;
 
     long startTime;
     long currentTime;
@@ -70,10 +72,11 @@ public class GameScreen extends ScreenAdapter {
             FileHandle filehandle = Gdx.files.local(".IScotGame");
             String[] strings = filehandle.readString().split("\n");
             lastTime = Long.valueOf(strings[0]).longValue();
-        }catch (Throwable e){
+        }catch (Throwable e){}
 
-        }
-
+        happinessLabel = new Texture("happiness.png");
+        hungerLabel = new Texture("hunger.png");
+        fatigueLabel = new Texture("fatigue.png");
     }
 
     /**
@@ -147,8 +150,10 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
         game.getBatch().draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
 
-        //The labels for the status bars.
-        game.getBatch().draw(hungerLabel, -120, 250, 30, 20);
+        //The labels for the status bar
+        game.getBatch().draw(happinessLabel, -120, 350, 25, 50);
+        game.getBatch().draw(hungerLabel, -120, 250, 25, 50);
+        game.getBatch().draw(fatigueLabel, -120, 150, 25, 50);
         
         //The settings button in the upper right corner.
         game.getBatch().draw(settingsButton, 120, 420, 30, 30);
@@ -175,7 +180,7 @@ public class GameScreen extends ScreenAdapter {
             }catch (Throwable e){
 
             }
-            gamePet.decrease();
+            gamePet.update("decay");
         }
         update();
         draw();
