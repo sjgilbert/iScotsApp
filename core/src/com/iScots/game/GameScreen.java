@@ -68,12 +68,15 @@ public class GameScreen extends ScreenAdapter {
         settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
         startTime = System.currentTimeMillis()/1000;
         currentTime = System.currentTimeMillis()/1000;
-        try {  //Pulls the last time from the local file if it is there.
+        try {        //Pulls the last time from the local file if it is there.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
-            String[] strings = filehandle.readString().split("\n");
-            lastTime = Long.valueOf(strings[0]).longValue();
-        }catch (Throwable e){}
-
+            String[] strings = filehandle.readString().split("\n");  //"strings" contains four objects.  They are used below:
+            lastTime = Long.valueOf(strings[0]);  //Sets previous time.
+            gamePet.setHappiness(Float.parseFloat(strings[1])); //Sets previous happiness.
+            gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
+            gamePet.setTiredness(Float.parseFloat(strings[3]));
+            System.out.println(strings[1]);
+        }catch(Throwable e){}
         happinessLabel = new Texture("happiness.png");
         hungerLabel = new Texture("hunger.png");
         fatigueLabel = new Texture("fatigue.png");
@@ -172,15 +175,19 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render (float delta) {
         currentTime = System.currentTimeMillis()/1000;
-        if (currentTime - lastTime > 1){  //Provide time in seconds.
+        while (currentTime - lastTime >= 1){  //Updates if more than a second has passed.  If more than two seconds have passed, runs multiple times.
             lastTime = currentTime;
-            try {  //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
-                FileHandle filehandle = Gdx.files.local(".IScotGame");
-                filehandle.writeString(Long.toString(lastTime) + "\n", false);
-            }catch (Throwable e){
+            //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
+            FileHandle filehandle = Gdx.files.local(".IScotGame");
+            filehandle.writeString(Long.toString(lastTime) + "\n", false); //"False" means that this overwrites previous local file in that location.
+            filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
+            filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
+            filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
 
-            }
-            gamePet.update("decay");
+            System.out.println(lastTime);
+
+            gamePet.update("decay"); //Decrease stats by interval.
+            lastTime++;  //Artificially alter last time so that it is "sooner" to make sure loop is not infinite.  Note that this does rely on the while loop executing in more than a second.
         }
         update();
         draw();

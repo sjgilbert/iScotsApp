@@ -93,6 +93,12 @@ public class Pet {
         return tiredness;
     }
 
+    public void setHunger(float h){hunger = h; }
+
+    public void setHappiness(float h) {happiness = h; }
+
+    public void setTiredness(float t){tiredness = t; }
+
     private void setPetImage(Texture texture) {
         petImage = texture;
     }
