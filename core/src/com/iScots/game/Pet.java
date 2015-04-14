@@ -40,6 +40,11 @@ public class Pet {
         } else if (action.equals("play")) {
             if (happiness < 3) { happiness += 0.2 * multiplier(happiness);}
         }
+        else if (action.equals("decay")) {
+            if (tiredness > -3) { tiredness -= 0.2 * multiplier(tiredness);}
+            if (hunger > -3) { hunger -= 0.2*multiplier(hunger);}
+            if (happiness > -3) { happiness -= 0.2*multiplier(happiness);}
+        }
         else {
             System.out.println("illegal argument");
         }
@@ -86,12 +91,6 @@ public class Pet {
 
     public float getTiredness(){
         return tiredness;
-    }
-
-    public void decrease(){
-        if (tiredness > -3) { tiredness -= 0.2 * multiplier(tiredness);}
-        if (hunger > -3) { hunger -= 0.2*multiplier(hunger);}
-        if (happiness > -3) { happiness -= 0.2*multiplier(happiness);}
     }
 
     private void setPetImage(Texture texture) {
