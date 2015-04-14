@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.files.FileHandle;
 
 /**
  * Created by Sam on 3/14/2015.
@@ -34,9 +35,11 @@ public class GameScreen extends ScreenAdapter {
     Rectangle sleepBounds;
     Rectangle settingsBounds;
 
-    Texture happinessLabel;
     Texture hungerLabel;
-    Texture fatigueLabel;
+
+    long startTime;
+    long currentTime;
+    long lastTime;
 
     /**
      * Initializes the screen.
@@ -53,6 +56,7 @@ public class GameScreen extends ScreenAdapter {
         greenBar = Assets.greenBar;     //These are instantiated for the status bars in the draw method.
         redBar = Assets.redBar;
         blackBar = Assets.blackBar;
+        hungerLabel = Assets.hungerLabel;
 
         settingsButton = Assets.redBar;     //Upper left
 
@@ -60,10 +64,15 @@ public class GameScreen extends ScreenAdapter {
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
         settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
+        startTime = System.currentTimeMillis()/1000;
+        currentTime = System.currentTimeMillis()/1000;
+        try {  //Pulls the last time from the local file if it is there.
+            FileHandle filehandle = Gdx.files.local(".IScotGame");
+            String[] strings = filehandle.readString().split("\n");
+            lastTime = Long.valueOf(strings[0]).longValue();
+        }catch (Throwable e){
 
-        happinessLabel = new Texture("happiness.png");
-        hungerLabel = new Texture("hunger.png");
-        fatigueLabel = new Texture("fatigue.png");
+        }
 
     }
 
@@ -138,10 +147,8 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
         game.getBatch().draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
 
-        //The labels for the status bar
-        game.getBatch().draw(happinessLabel, -120, 350, 25, 50);
-        game.getBatch().draw(hungerLabel, -120, 250, 25, 50);
-        game.getBatch().draw(fatigueLabel, -120, 150, 25, 50);
+        //The labels for the status bars.
+        game.getBatch().draw(hungerLabel, -120, 250, 30, 20);
         
         //The settings button in the upper right corner.
         game.getBatch().draw(settingsButton, 120, 420, 30, 30);
@@ -159,9 +166,15 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render (float delta) {
-        game.currentTime = System.currentTimeMillis()/1000;
-        if (game.currentTime - game.lastTime > 1){  //Provide time in seconds.
-            game.lastTime = game.currentTime;
+        currentTime = System.currentTimeMillis()/1000;
+        if (currentTime - lastTime > 1){  //Provide time in seconds.
+            lastTime = currentTime;
+            try {  //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
+                FileHandle filehandle = Gdx.files.local(".IScotGame");
+                filehandle.writeString(Long.toString(lastTime) + "\n", false);
+            }catch (Throwable e){
+
+            }
             gamePet.decrease();
         }
         update();

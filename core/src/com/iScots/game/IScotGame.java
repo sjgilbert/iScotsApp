@@ -13,20 +13,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * of this game was found in the libgdx demo code at https://github.com/libgdx/libgdx-demo-superjumper
  */
 public class IScotGame extends Game {
-	private SpriteBatch batch;  //The SpriteBatch used to draw all the graphics for the game.
+    private SpriteBatch batch;  //The SpriteBatch used to draw all the graphics for the game.
 
-	public long startTime;
-    public long currentTime;
-    public long lastTime;
 
     //The three screens for the game.
     private MainMenuScreen mainMenuScreen;
     private GameScreen gameScreen;
     private SettingsScreen settingsScreen;
 
-	@Override
-	public void create () {
-		batch = new SpriteBatch();  //The spritebatch used to draw everything
+    @Override
+    public void create () {
+        batch = new SpriteBatch();  //The spritebatch used to draw everything
 
         Assets.load();  //Loads in the assets
 
@@ -36,18 +33,15 @@ public class IScotGame extends Game {
         settingsScreen = new SettingsScreen(this);
 
         //Setting the initial screen
-		setScreen(mainMenuScreen);
+        setScreen(mainMenuScreen);
 
-        //TODO: Christopher please comment!
-        startTime = System.currentTimeMillis()/1000;
-        lastTime = System.currentTimeMillis()/1000;
-        currentTime = System.currentTimeMillis()/1000;
-	}
 
-	@Override
-	public void render () {
+    }
+
+    @Override
+    public void render () {
         super.render();
-	}
+    }
 
     public MainMenuScreen getMainMenuScreen() {
         return mainMenuScreen;
@@ -63,4 +57,3 @@ public class IScotGame extends Game {
 
     public SpriteBatch getBatch() { return batch;}
 }
-
