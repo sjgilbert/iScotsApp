@@ -23,9 +23,9 @@ public class Pet {
      */
     public Pet() {
         this.hunger = 1.0f;
-        this.happiness = 2.8f;
-        this.tiredness = 2.5f;
-        this.petImage = Assets.pet5;
+        this.happiness = 2.0f;
+        this.tiredness = 2.2f;
+        this.petImage = Assets.pet4;
     }
 
     /**
@@ -34,16 +34,16 @@ public class Pet {
      */
     public void update(String action) {
         if (action.equals("sleep")) {
-            if (tiredness < 3) { tiredness += 0.2*multiplier(tiredness);}
+            if (tiredness < 3) { tiredness += 0.8*multiplier(tiredness);}
         } else if (action.equals("feed")) {
-            if (hunger < 3) { hunger += 0.2 * multiplier(hunger);}
+            if (hunger < 3) { hunger += 0.8 * multiplier(hunger);}
         } else if (action.equals("play")) {
-            if (happiness < 3) { happiness += 0.2 * multiplier(happiness);}
+            if (happiness < 3) { happiness += 0.8 * multiplier(happiness);}
         }
         else if (action.equals("decay")) {
-            if (tiredness > -3) { tiredness -= 0.2 * multiplier(tiredness);}
-            if (hunger > -3) { hunger -= 0.2*multiplier(hunger);}
-            if (happiness > -3) { happiness -= 0.2*multiplier(happiness);}
+            if (tiredness > -3) { tiredness -= 0.01 * multiplier(tiredness);}
+            if (hunger > -3) { hunger -= 0.01*multiplier(hunger);}
+            if (happiness > -3) { happiness -= 0.01*multiplier(happiness);}
         }
         else {
             System.out.println("illegal argument");

@@ -40,22 +40,22 @@ public class GameScreen extends ScreenAdapter {
     private Texture fatigueLabel;
 
     //The variables needed for cooldowns
-    private static final long PLAY_TIME = 2;
-    private static final long EAT_TIME = 5;
-    private static final long SLEEP_TIME = 10;
+    private static final double PLAY_TIME = 1;
+    private static final double EAT_TIME = 2;
+    private static final double SLEEP_TIME = 3;
 
-    private long timePlayed;
-    private long timeAte;
-    private long timeSlept;
+    private double timePlayed;
+    private double timeAte;
+    private double timeSlept;
 
     private boolean playOnCooldown = false;
     private boolean eatOnCooldown = false;
     private boolean sleepOnCooldown = false;
 
     //TODO: Christopher please comment!
-    private long startTime;
-    private long currentTime;
-    private long lastTime;
+    private double startTime;
+    private double currentTime;
+    private double lastTime;
 
     /**
      * Initializes the screen.
@@ -85,7 +85,7 @@ public class GameScreen extends ScreenAdapter {
         try {  //Pulls the last time from the local file if it is there.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
             String[] strings = filehandle.readString().split("\n");
-            lastTime = Long.valueOf(strings[0]).longValue();
+            lastTime = Double.valueOf(strings[0]);
         }catch (Throwable e){}
 
         happinessLabel = new Texture("happiness.png");
@@ -218,12 +218,12 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render (float delta) {
-        currentTime = System.currentTimeMillis()/1000;
-        if (currentTime - lastTime > 1){  //Provide time in seconds.
+        currentTime = System.currentTimeMillis()/1000.0;
+        if (currentTime - lastTime > delta){  //Provide time in seconds.
             lastTime = currentTime;
             try {  //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
                 FileHandle filehandle = Gdx.files.local(".IScotGame");
-                filehandle.writeString(Long.toString(lastTime) + "\n", false);
+                filehandle.writeString(Double.toString(lastTime) + "\n", false);
             }catch (Throwable e){
 
             }
