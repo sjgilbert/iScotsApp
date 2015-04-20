@@ -2,6 +2,7 @@ package com.iScots.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,9 @@ public class SettingsScreen extends ScreenAdapter {
     Texture backButton = Assets.redBar; //For the gameScreen (back) button.
     Rectangle backBounds = new Rectangle(-150, 420, 30, 30);
 
+    Texture resetButton = Assets.blackBar;
+    Rectangle resetBounds = new Rectangle(-30, -20, 60, 40);
+
     public SettingsScreen(IScotGame game) {
         this.game = game;
         guiCam = new OrthographicCamera(300, 900);
@@ -28,7 +32,7 @@ public class SettingsScreen extends ScreenAdapter {
     }
 
     /**
-     * Currently only allows the user to go back to the game.
+     * Currently only allows the user to go back to the game and reset.
      */
     public void update() {
         if (Gdx.input.justTouched()) {
@@ -40,11 +44,21 @@ public class SettingsScreen extends ScreenAdapter {
                 game.setScreen(game.getGameScreen());
                 return;
             }
+
+            if (resetBounds.contains(touchPoint.x,touchPoint.y)) { //Resets.
+                System.out.println("reset");
+                FileHandle filehandle = Gdx.files.local(".IScotGame");
+                filehandle.writeString(Long.toString(System.currentTimeMillis()/1000) + "\n", false); //"False" means that this overwrites previous local file in that location.
+                filehandle.writeString(Float.toString(2.8f) + "\n", true);  //"True" means that this is appended to local file.
+                filehandle.writeString(Float.toString(1.0f) + "\n", true);
+                filehandle.writeString(Float.toString(2.5f) + "\n", true);
+            }
+
         }
     }
 
     /**
-     * Currently only draws the background and a placeholder for the back button.
+     * Currently only draws the background and a placeholder for the back button.  Also reset button.
      */
     public void draw() {
         GL20 gl = Gdx.gl;
@@ -58,6 +72,8 @@ public class SettingsScreen extends ScreenAdapter {
         game.getBatch().draw(Assets.settingsScreen, -150, -450, 300, 900); //The background.  Last two must always be the same as camera size!
 
         game.getBatch().draw(backButton, -150, 420, 30, 30); //The back button
+
+        game.getBatch().draw(resetButton, -30, -20, 60, 40); //The reset button
 
         game.getBatch().end();
     }
