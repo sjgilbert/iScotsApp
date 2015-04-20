@@ -59,12 +59,13 @@ public class GameScreen extends ScreenAdapter {
 
     /**
      * Initializes the screen.
+     *
      * @param game The game that the Screen belongs to.  Necessary for referencing the SpriteBatch.
      */
     public GameScreen(IScotGame game) {
         this.game = game;
 
-        guiCam = new OrthographicCamera(300,900);   //TODO: Christopher please comment!
+        guiCam = new OrthographicCamera(300, 900);   //TODO: Christopher please comment!
         touchPoint = new Vector3(); //Supplies the input for the update method.
 
         gamePet = new Pet();    //Creates and stores a pet for the game.
@@ -80,8 +81,8 @@ public class GameScreen extends ScreenAdapter {
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
         settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
-        startTime = System.currentTimeMillis()/1000;
-        currentTime = System.currentTimeMillis()/1000;
+        startTime = System.currentTimeMillis() / 1000;
+        currentTime = System.currentTimeMillis() / 1000;
         try {        //Pulls the last time from the local file if it is there.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
             String[] strings = filehandle.readString().split("\n");  //"strings" contains four objects.  They are used below:
@@ -90,7 +91,8 @@ public class GameScreen extends ScreenAdapter {
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
             System.out.println(strings[1]);
-        }catch(Throwable e){}
+        } catch (Throwable e) {
+        }
         happinessLabel = new Texture("happiness.png");
         hungerLabel = new Texture("hunger.png");
         fatigueLabel = new Texture("fatigue.png");
@@ -106,23 +108,20 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.justTouched()) {
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                if(!playOnCooldown) {
+                if (!playOnCooldown) {
                     System.out.println("play"); //These println are here for testing.
                     gamePet.update("play");
                     playOnCooldown = !playOnCooldown;   //puts the action on cooldown
                     timePlayed = currentTime;   //marks the start time for the cooldown
                     return;
-                }
-                else {
-                    if(currentTime - timePlayed < PLAY_TIME) {  //for when the cooldown isn't over
+                } else {
+                    if (currentTime - timePlayed < PLAY_TIME) {  //for when the cooldown isn't over
                         System.out.println("play on cooldown");
-                    }
-                    else {
+                    } else {
                         playOnCooldown = !playOnCooldown;   //takes the action off cooldown
                     }
                 }
-            }
-            else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
+            } else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
                 if (!eatOnCooldown) {
                     System.out.println("feed");
                     gamePet.update("feed");
@@ -136,29 +135,25 @@ public class GameScreen extends ScreenAdapter {
                         eatOnCooldown = !eatOnCooldown;
                     }
                 }
-            }
-            else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
+            } else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
                 if (!sleepOnCooldown) {
                     System.out.println("sleep");
                     gamePet.update("sleep");
                     sleepOnCooldown = !sleepOnCooldown;
                     timeSlept = currentTime;
                     return;
-                }
-                else {
+                } else {
                     if (currentTime - timeSlept < SLEEP_TIME) {
                         System.out.println("sleep on cooldown");
                     } else {
                         sleepOnCooldown = !sleepOnCooldown;
                     }
                 }
-            }
-            else if (settingsBounds.contains(touchPoint.x, touchPoint.y)) {
+            } else if (settingsBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("settings");
                 game.setScreen(game.getSettingsScreen());       //calls the game's set screen method to set the screen to the settingsScreen.
                 return;
-            }
-            else {
+            } else {
                 System.out.println(touchPoint);     //For testing.
             }
         }
@@ -196,15 +191,15 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(greenBar, 0, 150, 120, 50);
 
         //The sliding black indicator on the status bars.  Updates based on the attributes.
-        game.getBatch().draw(blackBar, 40*gamePet.getHappiness(), 350, 1, 50);
-        game.getBatch().draw(blackBar, 40*gamePet.getHunger(), 250, 1, 50);
-        game.getBatch().draw(blackBar, 40*gamePet.getTiredness(), 150, 1, 50);
+        game.getBatch().draw(blackBar, 40 * gamePet.getHappiness(), 350, 1, 50);
+        game.getBatch().draw(blackBar, 40 * gamePet.getHunger(), 250, 1, 50);
+        game.getBatch().draw(blackBar, 40 * gamePet.getTiredness(), 150, 1, 50);
 
         //The labels for the status bar
         game.getBatch().draw(happinessLabel, -120, 350, 25, 50);
         game.getBatch().draw(hungerLabel, -120, 250, 25, 50);
         game.getBatch().draw(fatigueLabel, -120, 150, 25, 50);
-        
+
         //The settings button in the upper right corner.
         game.getBatch().draw(settingsButton, 120, 420, 30, 30);
 
@@ -215,14 +210,9 @@ public class GameScreen extends ScreenAdapter {
 
     }
 
-    /**
-     * //TODO: Christopher please comment!
-     * @param delta
-     */
-    @Override
-    public void render (float delta) {
-        currentTime = System.currentTimeMillis()/1000;
-        if (currentTime - lastTime > 1){  //Provide time in seconds.
+        private void store(float delta) {
+        currentTime=System.currentTimeMillis()/1000;
+        if(currentTime-lastTime>delta) {  //Provide time in seconds.
             lastTime = currentTime;
             //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
@@ -230,10 +220,22 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
-
             }
-            gamePet.update("decay");
         }
+
+    public Pet getGamePet() {
+        return gamePet;
+    }
+
+    /**
+     * //TODO: Christopher please comment!
+     *
+     * @param delta
+     */
+    @Override
+    public void render(float delta) {
+        store(delta);
+        gamePet.update("decay");
         update();
         draw();
     }
