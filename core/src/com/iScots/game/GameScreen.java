@@ -16,32 +16,46 @@ import com.badlogic.gdx.files.FileHandle;
  * settingsScreen in the upper right corner.
  */
 public class GameScreen extends ScreenAdapter {
-    IScotGame game;
-    OrthographicCamera guiCam;
-    Vector3 touchPoint;         //Used for touch handling.
-    Pet gamePet;    //The pet for the game.
+    private IScotGame game;
+    private OrthographicCamera guiCam;
+    private Vector3 touchPoint;         //Used for touch handling.
+    private Pet gamePet;    //The pet for the game.
 
     //The textures used to draw the status bars.
-    Texture greenBar;
-    Texture redBar;
-    Texture blackBar;
+    private Texture greenBar;
+    private Texture redBar;
+    private Texture blackBar;
 
     //Temporary placeholder for the settings button.
-    Texture settingsButton;
+    private Texture settingsButton;
 
     //These define the bounds of the touchboxes for the actions.
-    Rectangle playBounds;
-    Rectangle eatBounds;
-    Rectangle sleepBounds;
-    Rectangle settingsBounds;
+    private Rectangle playBounds;
+    private Rectangle eatBounds;
+    private Rectangle sleepBounds;
+    private Rectangle settingsBounds;
 
-    Texture happinessLabel;
-    Texture hungerLabel;
-    Texture fatigueLabel;
+    private Texture happinessLabel;
+    private Texture hungerLabel;
+    private Texture fatigueLabel;
 
-    long startTime;
-    long currentTime;
-    long lastTime;
+    //The variables needed for cooldowns
+    private static final long PLAY_TIME = 2;
+    private static final long EAT_TIME = 5;
+    private static final long SLEEP_TIME = 10;
+
+    private long timePlayed;
+    private long timeAte;
+    private long timeSlept;
+
+    private boolean playOnCooldown = false;
+    private boolean eatOnCooldown = false;
+    private boolean sleepOnCooldown = false;
+
+    //TODO: Christopher please comment!
+    private long startTime;
+    private long currentTime;
+    private long lastTime;
 
     /**
      * Initializes the screen.
@@ -89,19 +103,52 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.justTouched()) {
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                System.out.println("play"); //These println are here for testing.
-                gamePet.update("play");
-                return;
+                if(!playOnCooldown) {
+                    System.out.println("play"); //These println are here for testing.
+                    gamePet.update("play");
+                    playOnCooldown = !playOnCooldown;   //puts the action on cooldown
+                    timePlayed = currentTime;   //marks the start time for the cooldown
+                    return;
+                }
+                else {
+                    if(currentTime - timePlayed < PLAY_TIME) {  //for when the cooldown isn't over
+                        System.out.println("play on cooldown");
+                    }
+                    else {
+                        playOnCooldown = !playOnCooldown;   //takes the action off cooldown
+                    }
+                }
             }
             else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
-                System.out.println("feed");
-                gamePet.update("feed");
-                return;
+                if (!eatOnCooldown) {
+                    System.out.println("feed");
+                    gamePet.update("feed");
+                    eatOnCooldown = !eatOnCooldown;
+                    timeAte = currentTime;
+                    return;
+                } else {
+                    if (currentTime - timeAte < EAT_TIME) {
+                        System.out.println("eat on cooldown");
+                    } else {
+                        eatOnCooldown = !eatOnCooldown;
+                    }
+                }
             }
             else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
-                System.out.println("sleep");
-                gamePet.update("sleep");
-                return;
+                if (!sleepOnCooldown) {
+                    System.out.println("sleep");
+                    gamePet.update("sleep");
+                    sleepOnCooldown = !sleepOnCooldown;
+                    timeSlept = currentTime;
+                    return;
+                }
+                else {
+                    if (currentTime - timeSlept < SLEEP_TIME) {
+                        System.out.println("sleep on cooldown");
+                    } else {
+                        sleepOnCooldown = !sleepOnCooldown;
+                    }
+                }
             }
             else if (settingsBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("settings");
