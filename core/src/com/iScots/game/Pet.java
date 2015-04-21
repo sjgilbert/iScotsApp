@@ -3,6 +3,8 @@ package com.iScots.game;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.Random;
+
 /**
  * Created by Christopher on 3/23/2015.
  * The pet for the game.  Controls all of the game logic and keeps track of the attributes.
@@ -32,16 +34,16 @@ public class Pet {
      */
     public void update(String action) {
         if (action.equals("sleep")) {
-            if (tiredness < 3) { tiredness += 0.8*multiplier(tiredness);}
+            if (tiredness < 3) { tiredness += 0.8 * multiplier(tiredness);}
         } else if (action.equals("feed")) {
             if (hunger < 3) { hunger += 0.8 * multiplier(hunger);}
         } else if (action.equals("play")) {
             if (happiness < 3) { happiness += 0.8 * multiplier(happiness);}
         }
         else if (action.equals("decay")) {
-            if (tiredness > -3) { tiredness -= 0.01 * multiplier(tiredness);}
-            if (hunger > -3) { hunger -= 0.01*multiplier(hunger);}
-            if (happiness > -3) { happiness -= 0.01*multiplier(happiness);}
+            if (tiredness > -3) { tiredness -= 0.1 * multiplier(tiredness);}
+            if (hunger > -3) { hunger -= 0.1 * multiplier(hunger);}
+            if (happiness > -3) { happiness -= 0.1 * multiplier(happiness);}
         }
         else {
             System.out.println("illegal argument");
@@ -62,22 +64,22 @@ public class Pet {
      * @param x The value of the attribute being altered.
      * @return
      */
-    public float multiplier(float x) {
-        return (float) (1/Math.sqrt(2*Math.PI)*Math.exp(-Math.pow(-x,2)/(2*1.5)));
-    }
+        public float multiplier(float x) {
+            return (float) (1/Math.sqrt(2*Math.PI)*Math.exp(-Math.pow(-x,2)/(2*1.5)));
+        }
 
     /**
      * Sets the state of the pet.  Currently only sets based on happiness.
      * TODO: implement a better system for changing the pet's image.
      */
-    private void updateState() {
-        if (happiness < -2) {setPetImage(Assets.pet0);}
-        else if (happiness < -1) {setPetImage(Assets.pet1);}
-        else if (happiness < 0) {setPetImage(Assets.pet2);}
-        else if (happiness < 1) {setPetImage(Assets.pet3);}
-        else if (happiness < 2) {setPetImage(Assets.pet4);}
-        else if (happiness <= 3) {setPetImage(Assets.pet5);}
-    }
+        private void updateState() {
+            if (happiness < -2) {setPetImage(Assets.pet0);}
+            else if (happiness < -1) {setPetImage(Assets.pet1);}
+            else if (happiness < 0) {setPetImage(Assets.pet2);}
+            else if (happiness < 1) {setPetImage(Assets.pet3);}
+            else if (happiness < 2) {setPetImage(Assets.pet4);}
+            else if (happiness <= 3) {setPetImage(Assets.pet5);}
+        }
 
     public float getHunger(){
         return hunger;

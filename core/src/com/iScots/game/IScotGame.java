@@ -14,6 +14,7 @@ public class IScotGame extends Game {
     public long currentTime; //for the tail-wagging animation
     public long lastTime;
 
+
     //The three screens for the game.
     private MainMenuScreen mainMenuScreen;
     private GameScreen gameScreen;

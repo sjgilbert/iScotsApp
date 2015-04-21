@@ -19,7 +19,7 @@ public class SettingsScreen extends ScreenAdapter {
     OrthographicCamera guiCam;
     Vector3 touchPoint;     //For touch
 
-    Texture backButton = Assets.redBar; //For the gameScreen (back) button.
+    Texture backButton = Assets.returnButton; //For the gameScreen (back) button.
     Rectangle backBounds = new Rectangle(-150, 420, 30, 30);
 
     Texture resetButton = Assets.blackBar;
