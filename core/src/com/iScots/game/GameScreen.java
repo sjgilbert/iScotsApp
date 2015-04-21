@@ -73,14 +73,13 @@ public class GameScreen extends ScreenAdapter {
         greenBar = Assets.greenBar;     //These are instantiated for the status bars in the draw method.
         redBar = Assets.redBar;
         blackBar = Assets.blackBar;
-        hungerLabel = Assets.hungerLabel;
 
-        settingsButton = Assets.redBar;     //Upper left
+        settingsButton = Assets.settingsButton;     //Upper left
 
         playBounds = new Rectangle(-150, -450, 75, 150);    //lower left
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
-        settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
+        settingsBounds = new Rectangle(120, 420, 50, 50);       //upper right
         startTime = System.currentTimeMillis() / 1000;
         currentTime = System.currentTimeMillis() / 1000;
         try {        //Pulls the last time from the local file if it is there.

@@ -24,17 +24,21 @@ public class Assets {
     public static Texture redBar;
     public static Texture blackBar;
 
-    public static Texture ball;     //The action buttons.  Drawn by Annabelle?TODO:Annabelle?
+    public static Texture ball;     //The action buttons.  Drawn by Annabelle
     public static Texture bone;
     public static Texture bed;
 
-    public static Texture hungerLabel;
+    public static Texture playButton; //The action buttons on the launch screen. Created by Annabelle.
+    public static Texture aboutButton;
+
+    public static Texture settingsButton; //Play page --> setting page
+    public static Texture returnButton; //Settings page --> play page
     /**
      *Loads in all the assets when the app starts.
      */
     public static void load() {
         gameScreen = new Texture("gameScreen.png");
-        mainMenuScreen = new Texture("mainMenuScreen.png");
+        mainMenuScreen = new Texture("launchBackground.jpg");
         settingsScreen = new Texture("settingsScreen.png");
 
         pet0 = new Texture("pet0.png");
@@ -52,7 +56,11 @@ public class Assets {
         bone = new Texture("bone.png");
         bed = new Texture("bed.png");
 
-        hungerLabel = new Texture("hunger.png");
+        playButton = new Texture("playButton.png");
+        aboutButton = new Texture("aboutButton.png");
+
+        settingsButton = new Texture("settingsCog.png");
+        returnButton = new Texture("returnButton.png");
     }
 }
 
