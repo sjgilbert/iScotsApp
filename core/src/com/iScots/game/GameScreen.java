@@ -44,18 +44,18 @@ public class GameScreen extends ScreenAdapter {
     private static final double EAT_TIME = 2;
     private static final double SLEEP_TIME = 3;
 
-    private double timePlayed;
-    private double timeAte;
-    private double timeSlept;
+    private long timePlayed;
+    private long timeAte;
+    private long timeSlept;
 
     private boolean playOnCooldown = false;
     private boolean eatOnCooldown = false;
     private boolean sleepOnCooldown = false;
 
     //TODO: Christopher please comment!
-    private double startTime;
-    private double currentTime;
-    private double lastTime;
+    private long startTime;
+    private long currentTime;
+    private long lastTime;
 
     /**
      * Initializes the screen.
@@ -86,7 +86,7 @@ public class GameScreen extends ScreenAdapter {
         try {        //Pulls the last time from the local file if it is there.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
             String[] strings = filehandle.readString().split("\n");  //"strings" contains four objects.  They are used below:
-            lastTime = Double.valueOf(strings[0]);  //Sets previous time.
+            lastTime = Long.valueOf(strings[0]);  //Sets previous time.
             gamePet.setHappiness(Float.parseFloat(strings[1])); //Sets previous happiness.
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
@@ -221,19 +221,20 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        currentTime = System.currentTimeMillis()/1000;
-        if(currentTime - lastTime > 1) {  //Provide time in seconds.
-            while(currentTime - lastTime > 1) {
-                gamePet.update("decay");
-                lastTime++;
-            }
+        currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
+        if(currentTime - lastTime > 1) {
+//            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed
+//                gamePet.update("decay");
+//                lastTime++;
+//            }
             lastTime = currentTime;
             //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
-            filehandle.writeString(Double.toString(lastTime) + "\n", false); //"False" means that this overwrites previous local file in that location.
+            filehandle.writeString(Long.toString(lastTime) + "\n", false); //"False" means that this overwrites previous local file in that location.
             filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
+            gamePet.update("decay");
         }
         update();
         draw();
