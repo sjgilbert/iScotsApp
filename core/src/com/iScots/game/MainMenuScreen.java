@@ -9,54 +9,63 @@ import com.badlogic.gdx.math.Vector3;
 
 /**
  * Created by Sam on 4/5/2015.
+ * The main menu screen for when the app is first opened.  Currently only
+ * has a working play button that is a one way link to the gameScreen.
  */
 public class MainMenuScreen extends ScreenAdapter{
     IScotGame game;
     OrthographicCamera guiCam;
-    Vector3 touchPoint;
+    Vector3 touchPoint;     //For handling touch.
 
     Rectangle startBounds;
-    Rectangle aboutBounds;
+    //TODO: Implement: Rectangle aboutBounds;
 
     public MainMenuScreen(IScotGame game) {
         this.game = game;
         guiCam = new OrthographicCamera(300, 900);
         touchPoint = new Vector3();
-        startBounds = new Rectangle(-54,3.75f,100,58.15f);
-        aboutBounds = new Rectangle(2,2,2,2);
+
+        startBounds = new Rectangle(-54,3.75f,100,58.15f); //size of the play button image.
+        //TODO: aboutBounds = new Rectangle(2,2,2,2);
     }
 
+    /**
+     * Currently only allows the user to set the gameScreen.
+     */
     public void update() {
         if (Gdx.input.justTouched()) {
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-            System.out.print(touchPoint);
 
             if (startBounds.contains(touchPoint.x, touchPoint.y)) {
                 System.out.println("start");
-                GameScreen screen = new GameScreen(game);
-                game.setGameScreen(screen);
-                game.setScreen(screen);
+                game.setScreen(game.getGameScreen());
                 return;
             }
-
-            if (aboutBounds.contains(touchPoint.x, touchPoint.y)) {
-                System.out.println("about");
-                return;
+            else {
+                System.out.println(touchPoint);
             }
+//TODO: Implement            if (aboutBounds.contains(touchPoint.x, touchPoint.y)) {
+//                System.out.println("about");
+//                return;
+//            }
         }
     }
 
+    /**
+     * Draws the background currently.
+     */
     public void draw() {
         GL20 gl = Gdx.gl;
         gl.glClearColor(1, 1, 1, 1);
         gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         guiCam.update();
-        game.batch.setProjectionMatrix(guiCam.combined);
-        game.batch.enableBlending();
+        game.getBatch().setProjectionMatrix(guiCam.combined);
+        game.getBatch().enableBlending();
+        game.getBatch().begin();
 
-        game.batch.begin();
-        game.batch.draw(Assets.mainMenuScreen, -150, -450, 300, 900); //Last two must always be the same as camera size!
-        game.batch.end();
+        game.getBatch().draw(Assets.mainMenuScreen, -150, -450, 300, 900); //Draws the background.  Last two must always be the same as camera size!
+
+        game.getBatch().end();
 
     }
     @Override
