@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.sun.prism.Texture;
 
 /**
  * Created by Sam on 4/5/2015.
@@ -19,6 +20,9 @@ public class MainMenuScreen extends ScreenAdapter{
 
     Rectangle startBounds;
     //TODO: Implement: Rectangle aboutBounds;
+
+    Texture playButton;
+    Texture aboutButton;
 
     public MainMenuScreen(IScotGame game) {
         this.game = game;

@@ -76,7 +76,7 @@ public class GameScreen extends ScreenAdapter {
         blackBar = Assets.blackBar;
         hungerLabel = Assets.hungerLabel;
 
-        settingsButton = Assets.redBar;     //Upper left
+        settingsButton = Assets.settingsButton;     //Upper right
 
         playBounds = new Rectangle(-150, -450, 75, 150);    //lower left
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
