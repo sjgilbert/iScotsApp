@@ -1,6 +1,5 @@
 package com.iScots.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -72,7 +71,7 @@ public class Assets {
 
         hungerLabel = new Texture("hunger.png");
 
-        tail1 = new Texture("tail1.png");       //different
+        tail1 = new Texture("tail1.png");
         tail2 = new Texture("tail2.png");
 
         tailAnim = new Animation(0.2f, new TextureRegion(tail1, 370, 470, 80, 140), new TextureRegion(tail2, 370, 470, 80, 140));

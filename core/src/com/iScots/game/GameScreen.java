@@ -227,6 +227,10 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
+        game.currentTime = System.currentTimeMillis()/1000;   //need game.currentTime and game.lastTime for tail animation
+        if (game.currentTime - game.lastTime > 1){  //Provide time in seconds.
+            game.lastTime = game.currentTime;
+        }
         currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
         if(currentTime - lastTime > 1) {
 //            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed
@@ -236,7 +240,7 @@ public class GameScreen extends ScreenAdapter {
             lastTime = currentTime;
             //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
-            filehandle.writeString(Long.toString(lastTime) + "\n", false); //"False" means that this overwrites previous local file in that location.
+            filehandle.writeString(Double.toString(lastTime) + "\n", false); //"False" means that this overwrites previous local file in that location.
             filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
