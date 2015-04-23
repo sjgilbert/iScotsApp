@@ -22,8 +22,8 @@ public class SettingsScreen extends ScreenAdapter {
     Texture backButton = Assets.returnButton; //For the gameScreen (back) button.
     Rectangle backBounds = new Rectangle(-150, 420, 30, 30);
 
-    Texture resetButton = Assets.blackBar;
-    Rectangle resetBounds = new Rectangle(-30, -20, 60, 40);
+    Texture resetButton = Assets.resetButton;
+    Rectangle resetBounds = new Rectangle(-54, 3.75f, 100,110f);
 
     public SettingsScreen(IScotGame game) {
         this.game = game;
@@ -78,7 +78,7 @@ public class SettingsScreen extends ScreenAdapter {
 
         game.getBatch().draw(backButton, -150, 420, 30, 30); //The back button
 
-        game.getBatch().draw(resetButton, -30, -20, 60, 40); //The reset button
+        game.getBatch().draw(resetButton, -54, 3.75f, 100,110f); //The reset button.
 
         game.getBatch().end();
     }

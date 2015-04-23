@@ -33,6 +33,7 @@ public class Assets {
 
     public static Texture settingsButton; //Play page --> setting page
     public static Texture returnButton; //Settings page --> play page
+    public static Texture resetButton; //reset button on settings screen
 
     public static Texture tail1;
     public static Texture tail2;
@@ -74,6 +75,7 @@ public class Assets {
 
         settingsButton = new Texture("settingsCog.png");
         returnButton = new Texture("returnButton.png");
+        resetButton = new Texture("refreshButton.png");
 
         tail1 = new Texture("tail1.png");
         tail2 = new Texture("tail2.png");
