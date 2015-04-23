@@ -21,15 +21,13 @@ public class MainMenuScreen extends ScreenAdapter{
     Rectangle startBounds;
     //TODO: Implement: Rectangle aboutBounds;
 
-    Texture playButton;
-    Texture aboutButton;
 
     public MainMenuScreen(IScotGame game) {
         this.game = game;
         guiCam = new OrthographicCamera(300, 900);
         touchPoint = new Vector3();
 
-        startBounds = new Rectangle(-54,3.75f,100,58.15f); //size of the play button image.
+        startBounds = new Rectangle(-54,3.75f,100,110f); //size of the play button image.
         //TODO: aboutBounds = new Rectangle(2,2,2,2);
     }
 
@@ -68,7 +66,9 @@ public class MainMenuScreen extends ScreenAdapter{
         game.getBatch().begin();
 
         game.getBatch().draw(Assets.mainMenuScreen, -150, -450, 300, 900); //Draws the background.  Last two must always be the same as camera size!
-
+        game.getBatch().draw(Assets.iScotName, -54, 103.75f, 100, 200f); //Draws the intro title.
+        game.getBatch().draw(Assets.playButton, -54,3.75f,100,110f); //Draws the play button. Matches the size of the bounds listed above.
+        game.getBatch().draw(Assets.aboutButton, -54, -106.25f, 100, 110f);
         game.getBatch().end();
 
     }

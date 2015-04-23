@@ -74,7 +74,6 @@ public class GameScreen extends ScreenAdapter {
         greenBar = Assets.greenBar;     //These are instantiated for the status bars in the draw method.
         redBar = Assets.redBar;
         blackBar = Assets.blackBar;
-        hungerLabel = Assets.hungerLabel;
 
         settingsButton = Assets.settingsButton;     //Upper right
 

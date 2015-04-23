@@ -29,7 +29,7 @@ public class Assets {
 
     public static Texture playButton; //The action buttons on the launch screen. Created by Annabelle.
     public static Texture aboutButton;
-    public static Texture hungerLabel;
+    public static Texture iScotName;
 
     public static Texture settingsButton; //Play page --> setting page
     public static Texture returnButton; //Settings page --> play page
@@ -48,6 +48,7 @@ public class Assets {
         mainMenuScreen = new Texture("launchBackground.jpg");
         settingsScreen = new Texture("settingsScreen.png");
 
+        //images of the iScot pet
         pet0 = new Texture("pet0.png");
         pet1 = new Texture("pet1.png");
         pet2 = new Texture("pet2.png");
@@ -55,21 +56,24 @@ public class Assets {
         pet4 = new Texture("pet4.png");
         pet5 = new Texture("pet5.png");
 
+
+        //images for the status bars.
         greenBar = new Texture("greenRect.png");
         redBar = new Texture("redRect.png");
         blackBar = new Texture("blackRect.png");
 
+        //action button images.
         ball = new Texture("ball.png");
         bone = new Texture("bone.png");
         bed = new Texture("bed.png");
 
+        //images for the launch page.
+        iScotName = new Texture("iScotLabel.png");
         playButton = new Texture("playButton.png");
         aboutButton = new Texture("aboutButton.png");
 
         settingsButton = new Texture("settingsCog.png");
         returnButton = new Texture("returnButton.png");
-
-        hungerLabel = new Texture("hunger.png");
 
         tail1 = new Texture("tail1.png");
         tail2 = new Texture("tail2.png");
