@@ -45,18 +45,18 @@ public class GameScreen extends ScreenAdapter {
     private static final double EAT_TIME = 2;
     private static final double SLEEP_TIME = 3;
 
-    private double timePlayed;
-    private double timeAte;
-    private double timeSlept;
+    private long timePlayed;
+    private long timeAte;
+    private long timeSlept;
 
     private boolean playOnCooldown = false;
     private boolean eatOnCooldown = false;
     private boolean sleepOnCooldown = false;
 
     //TODO: Christopher please comment!
-    private double startTime;
-    private double currentTime;
-    private double lastTime;
+    private long startTime;
+    private long currentTime;
+    private long lastTime;
 
     /**
      * Initializes the screen.
@@ -86,7 +86,7 @@ public class GameScreen extends ScreenAdapter {
         try {        //Pulls the last time from the local file if it is there.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
             String[] strings = filehandle.readString().split("\n");  //"strings" contains four objects.  They are used below:
-            lastTime = Double.valueOf(strings[0]);  //Sets previous time.
+            lastTime = Long.valueOf(strings[0]);  //Sets previous time.
             gamePet.setHappiness(Float.parseFloat(strings[1])); //Sets previous happiness.
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
