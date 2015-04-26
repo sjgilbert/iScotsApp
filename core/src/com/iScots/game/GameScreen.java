@@ -53,10 +53,14 @@ public class GameScreen extends ScreenAdapter {
     private boolean eatOnCooldown = false;
     private boolean sleepOnCooldown = false;
 
-    //TODO: Christopher please comment!
-    private double startTime;
-    private double currentTime;
-    private double lastTime;
+    private boolean playButton =  false;  //These booleans indicate if the button is currently being pressed.
+    private boolean eatButton = false;
+    private boolean sleepButton = false;
+
+    private double lastButtonTime; //The last time a button (any stat button) was pressed.
+
+    private double currentTime; //Value taken directly from
+    private double lastTime;  //Last time the stats were updated.
 
     /**
      * Initializes the screen.
@@ -81,8 +85,8 @@ public class GameScreen extends ScreenAdapter {
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
         settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
-        startTime = System.currentTimeMillis() / 1000;
         currentTime = System.currentTimeMillis() / 1000;
+        lastButtonTime = System.currentTimeMillis() / 1000;
         try {        //Pulls the last time from the local file if it is there.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
             String[] strings = filehandle.readString().split("\n");  //"strings" contains four objects.  They are used below:
@@ -106,8 +110,13 @@ public class GameScreen extends ScreenAdapter {
      */
     public void update() {
         if (Gdx.input.justTouched()) {
+            playButton = false;   //Setting them false here means that they get updated the next time the screen is touched, which lets players see what they're doing..
+            eatButton = false;
+            sleepButton = false;
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
+                playButton = true; //Note that the button is pressed.
+                lastButtonTime = System.currentTimeMillis() / 1000;  //Reset last button time to now.
                 if (!playOnCooldown) {
                     System.out.println("play"); //These println are here for testing.
                     gamePet.update("play");
@@ -122,6 +131,8 @@ public class GameScreen extends ScreenAdapter {
                     }
                 }
             } else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
+                eatButton = true;
+                lastButtonTime = System.currentTimeMillis() / 1000;
                 if (!eatOnCooldown) {
                     System.out.println("feed");
                     gamePet.update("feed");
@@ -136,6 +147,8 @@ public class GameScreen extends ScreenAdapter {
                     }
                 }
             } else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
+                sleepButton = true;
+                lastButtonTime = System.currentTimeMillis() / 1000;
                 if (!sleepOnCooldown) {
                     System.out.println("sleep");
                     gamePet.update("sleep");
@@ -157,6 +170,11 @@ public class GameScreen extends ScreenAdapter {
                 System.out.println(touchPoint);     //For testing.
             }
         }
+        if (currentTime - lastButtonTime > 5){  //Makes the button shrink back down after 5 seconds.
+            playButton = false;
+            eatButton = false;
+            sleepButton = false;
+        }
     }
 
     /**
@@ -174,11 +192,6 @@ public class GameScreen extends ScreenAdapter {
 
         //The backGround
         game.getBatch().draw(Assets.gameScreen, -150, -450, 300, 900); //Last two must always be the same as camera size for gameScreen.  (So coordinates align.)
-
-        //The buttons for actions.  Drawn from left to right.
-        game.getBatch().draw(Assets.ball, -150, -450, 75, 150);
-        game.getBatch().draw(Assets.bone, -38, -450, 75, 150);
-        game.getBatch().draw(Assets.bed, 75, -450, 75, 150);
 
         //The left half of the status bars.
         game.getBatch().draw(redBar, -120, 350, 120, 50);
@@ -211,6 +224,27 @@ public class GameScreen extends ScreenAdapter {
         TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);
         game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
 
+        //The buttons for actions.  Drawn from left to right.
+        if (!playButton) {
+            game.getBatch().draw(Assets.ball, -150, -450, 75, 150);
+        }
+        else if (playButton){  //Draw it larger.
+            game.getBatch().draw(Assets.ball, -150, -450, 100, 300);
+        }
+        if (!eatButton) {
+            game.getBatch().draw(Assets.bone, -38, -450, 75, 150);
+        }
+        else if (eatButton){
+            game.getBatch().draw(Assets.bone, -50, -450, 100, 300);
+        }
+        if (!sleepButton){
+            game.getBatch().draw(Assets.bed, 75, -450, 75, 150);
+        }
+        else if (sleepButton){
+            game.getBatch().draw(Assets.bed, 50, -450, 100, 300);
+        }
+
+
         game.getBatch().end();
 
     }
@@ -234,7 +268,7 @@ public class GameScreen extends ScreenAdapter {
         if(currentTime - lastTime > 1) {
 //            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed
 //                gamePet.update("decay");
-//                lastTime++;
+//                lastTime += 1;
 //            }
             lastTime = currentTime;
             //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
