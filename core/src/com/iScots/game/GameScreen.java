@@ -53,19 +53,15 @@ public class GameScreen extends ScreenAdapter {
     private boolean eatOnCooldown = false;
     private boolean sleepOnCooldown = false;
 
-    //TODO: Christopher please comment!
-    private long startTime;
-    private long currentTime;
-    private long lastTime;
-    
     private boolean playButton =  false;  //These booleans indicate if the button is currently being pressed.
     private boolean eatButton = false;
     private boolean sleepButton = false;
 
     private double lastButtonTime; //The last time a button (any stat button) was pressed.
 
-    private double currentTime; //Value taken directly from
-    private double lastTime;  //Last time the stats were updated.
+    //TODO: Christopher please comment!
+    private long currentTime; //Value taken directly from
+    private long lastTime;  //Last time the stats were updated.
 
     /**
      * Initializes the screen.
@@ -290,10 +286,10 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
-            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
+//            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
                 gamePet.update("decay");
             }
-        }
+//        }
         update();
         draw();
     }
