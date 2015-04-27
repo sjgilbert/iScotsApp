@@ -191,9 +191,9 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(greenBar, 0, 150, 120, 50);
 
         //The sliding black indicator on the status bars.  Updates based on the attributes.
-        game.getBatch().draw(blackBar, 40 * gamePet.getHappiness(), 350, 1, 50);
-        game.getBatch().draw(blackBar, 40 * gamePet.getHunger(), 250, 1, 50);
-        game.getBatch().draw(blackBar, 40 * gamePet.getTiredness(), 150, 1, 50);
+        game.getBatch().draw(blackBar, 2.4f * gamePet.getHappiness() - 120, 350, 1, 50);
+        game.getBatch().draw(blackBar, 2.4f * gamePet.getHunger() - 120, 250, 1, 50);
+        game.getBatch().draw(blackBar, 2.4f * gamePet.getTiredness() - 120, 150, 1, 50);
 
         //The labels for the status bar
         game.getBatch().draw(happinessLabel, -120, 350, 25, 50);
@@ -206,10 +206,18 @@ public class GameScreen extends ScreenAdapter {
         //The pet in the center of the screen.
         game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
 
-        Tail tail = new Tail(100, 100);
-        tail.update(game.currentTime - game.lastTime); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
-        TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);
-        game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
+        //This if is to trigger the message that pops up on death.  Currently the else is the tail animation.
+        //TODO: We need to work out what happens on death. The tail should stop moving, but this way it removes the tail on death
+        if(!gamePet.isAlive()) {
+            game.getBatch().draw(blackBar, 0, 0, 100, 100);
+        }
+        //TODO: Please comment!
+        else {
+            Tail tail = new Tail(100, 100);
+            tail.update(game.currentTime - game.lastTime); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
+            TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);
+            game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
+        }
 
         game.getBatch().end();
 
@@ -227,11 +235,11 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         game.currentTime = System.currentTimeMillis()/1000;   //need game.currentTime and game.lastTime for tail animation
-        if (game.currentTime - game.lastTime > 1){  //Provide time in seconds.
+        if (game.currentTime - game.lastTime > 1 && gamePet.isAlive()){  //Provide time in seconds.
             game.lastTime = game.currentTime;
         }
         currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
-        if(currentTime - lastTime > 1) {
+        if(currentTime - lastTime > 1 && gamePet.isAlive()) {
 //            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed
 //                gamePet.update("decay");
 //                lastTime++;
@@ -243,7 +251,9 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
-            gamePet.update("decay");
+            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
+                gamePet.update("decay");
+            }
         }
         update();
         draw();

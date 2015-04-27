@@ -22,10 +22,10 @@ public class Pet {
      * Currently initializing to testing values.
      */
     public Pet() {
-        this.hunger = 1.0f;
-        this.happiness = 2.0f;
-        this.tiredness = 2.2f;
-        this.petImage = Assets.pet4;
+        this.happiness = 100f;
+        this.hunger = 95f;
+        this.tiredness = 96f;
+        this.petImage = Assets.pet5;
     }
 
     /**
@@ -34,29 +34,51 @@ public class Pet {
      */
     public void update(String action) {
         if (action.equals("sleep")) {
-            if (tiredness < 3) { tiredness += 0.8 * multiplier(tiredness);}
+            if (tiredness < 100) { tiredness += 0.8 * multiplier(tiredness);}
         } else if (action.equals("feed")) {
-            if (hunger < 3) { hunger += 0.8 * multiplier(hunger);}
+            if (hunger < 100) { hunger += 0.8 * multiplier(hunger);}
         } else if (action.equals("play")) {
-            if (happiness < 3) { happiness += 0.8 * multiplier(happiness);}
+            if (happiness < 100) { happiness += 0.8 * multiplier(happiness);}
         }
-        else if (action.equals("decay")) {
-            if (tiredness > -3) { tiredness -= 0.1 * multiplier(tiredness);}
-            if (hunger > -3) { hunger -= 0.1 * multiplier(hunger);}
-            if (happiness > -3) { happiness -= 0.1 * multiplier(happiness);}
+        else if (action.equals("decay")) {                          //The decay is based on the formula for compound interest.
+            if (tiredness > 0.5) { tiredness = tiredness*0.99995f;}
+            if (hunger > 0.5) { hunger = hunger*0.99995f;}
+            if (happiness > 0.5) { happiness = happiness*0.99995f;}
         }
         else {
             System.out.println("illegal argument");
         }
-        //These lines are to make sure the attributes don't go out of bounds.
-        if (happiness < -3) {happiness = -3;}
-        else if (happiness > 3) {happiness = 3;}
-        if (hunger < -3) {hunger = -3;}
-        else if (hunger > 3) {hunger = 3;}
-        if (tiredness < -3) {tiredness = -3;}
-        else if (tiredness > 3) {tiredness = 3;}
-
+        //These lines are to make sure the attributes don't go out of bounds, and control the death sequence.
+        if (happiness < .5) {
+            onDeath();}
+        else if (happiness > 100) {happiness = 100;}
+        if (hunger < .5) {
+            onDeath();
+        }
+        else if (hunger > 100) {hunger = 100;}
+        if (tiredness < .5) {
+            onDeath();
+        }
+        else if (tiredness > 100) {tiredness = 100;}
         updateState(); //to set the proper image.
+    }
+
+    /**
+     * Method for checking the state of the pet.  Checks all attributes to see if any
+     * are equal to 0.
+     * @return true if pet is alive, false otherwise
+     */
+    public boolean isAlive() {
+        return happiness!=0 && hunger!=0 && tiredness!=0;
+    }
+
+    /**
+     * Sets all attributes to 0 when the pet dies (any attribute drops below 0.5)
+     */
+    private void onDeath() {
+        happiness = 0;
+        hunger = 0;
+        tiredness = 0;
     }
 
     /**
@@ -73,12 +95,12 @@ public class Pet {
      * TODO: implement a better system for changing the pet's image.
      */
         private void updateState() {
-            if (happiness < -2) {setPetImage(Assets.pet0);}
-            else if (happiness < -1) {setPetImage(Assets.pet1);}
-            else if (happiness < 0) {setPetImage(Assets.pet2);}
-            else if (happiness < 1) {setPetImage(Assets.pet3);}
-            else if (happiness < 2) {setPetImage(Assets.pet4);}
-            else if (happiness <= 3) {setPetImage(Assets.pet5);}
+            if (happiness < 100/6) {setPetImage(Assets.pet0);}
+            else if (happiness < 2*100/6) {setPetImage(Assets.pet1);}
+            else if (happiness < 3*100/6) {setPetImage(Assets.pet2);}
+            else if (happiness < 4*100/6) {setPetImage(Assets.pet3);}
+            else if (happiness < 5*100/6) {setPetImage(Assets.pet4);}
+            else if (happiness <= 6*100/6) {setPetImage(Assets.pet5);}
         }
 
     public float getHunger(){

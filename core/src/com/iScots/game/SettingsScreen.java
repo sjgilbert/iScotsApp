@@ -50,9 +50,9 @@ public class SettingsScreen extends ScreenAdapter {
                 FileHandle filehandle = Gdx.files.local(".IScotGame");
 
                 Pet pet = game.getGameScreen().getGamePet();
-                pet.setHappiness(1.0f);
-                pet.setHunger(2.0f);
-                pet.setTiredness(2.2f);
+                pet.setHappiness(100);
+                pet.setHunger(95);
+                pet.setTiredness(96);
 
                 filehandle.writeString(Double.toString(System.currentTimeMillis()/1000.0) + "\n", false); //"False" means that this overwrites previous local file in that location.
                 filehandle.writeString(Float.toString(pet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
