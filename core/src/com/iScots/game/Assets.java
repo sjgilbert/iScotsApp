@@ -43,6 +43,23 @@ public class Assets {
     public static Texture openEye;
     public static Animation blinkAnim;
 
+    public static Texture eat1;
+    public static Texture eat2;
+    public static Texture eat3;
+    public static Texture eat4;
+    public static Animation eatAnim;
+
+    public static Texture sleep1;
+    public static Texture sleep2;
+    public static Texture sleep3;
+    public static Texture sleep4;
+    public static Animation sleepAnim;
+
+    public static Texture play1;
+    public static Texture play2;
+    public static Texture play3;
+    public static Animation playAnim;
+
 
     /**
      *Loads in all the assets when the app starts.
@@ -89,6 +106,26 @@ public class Assets {
         openEye = new Texture("transparent.png");
 
         blinkAnim = new Animation (0.2f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30));
+
+        eat1 = new Texture("eating1.png");
+        eat2 = new Texture("eating2.png");
+        eat3 = new Texture("eating3.png");
+        eat4 = new Texture("eating4.png");
+
+        eatAnim = new Animation(0.15f, new TextureRegion(eat1), new TextureRegion(eat2), new TextureRegion(eat3), new TextureRegion(eat4));
+
+        sleep1 = new Texture("sleep1.png");
+        sleep2 = new Texture("sleep2.png");
+        sleep3 = new Texture("sleep3.png");
+        sleep4 = new Texture("sleep4.png");
+
+        sleepAnim = new Animation(0.15f, new TextureRegion(sleep1), new TextureRegion(sleep2), new TextureRegion(sleep3), new TextureRegion(sleep4));
+
+        play1 = new Texture("play1.png");
+        play2 = new Texture("play2.png");
+        play3 = new Texture("play3.png");
+
+        playAnim = new Animation(0.15f, new TextureRegion(play1), new TextureRegion(play2), new TextureRegion(play3));
 
 
     }

@@ -218,7 +218,7 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(settingsButton, 120, 420, 30, 30);
 
         //The pet in the center of the screen.
-        game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
+        //game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
 
         //This if is to trigger the message that pops up on death.  Currently the else is the tail animation.
         //TODO: We need to work out what happens on death. The tail should stop moving, but this way it removes the tail on death
@@ -258,6 +258,29 @@ public class GameScreen extends ScreenAdapter {
         }
         else if (sleepButton){
             game.getBatch().draw(Assets.bed, 50, -450, 100, 300);
+        }
+
+        //cooldown animations
+        if (!playButton & !eatButton & !sleepButton) {
+            game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
+        }
+        else if (playButton){
+            CoolDown play = new CoolDown(100, 100); //cooldown animation of pet playing
+            play.update(game.currentTailTime - game.lastTailTime);
+            TextureRegion keyFramePlay = Assets.playAnim.getKeyFrame(play.stateTime, Animation.ANIMATION_NONLOOPING);
+            game.getBatch().draw(keyFramePlay, -100, -400, 200, 800);
+        }
+        else if (eatButton){
+            CoolDown eat = new CoolDown(100, 100); //cooldown animation of pet eating
+            eat.update(game.currentTailTime - game.lastTailTime);
+            TextureRegion keyFrameEat = Assets.eatAnim.getKeyFrame(eat.stateTime, Animation.ANIMATION_NONLOOPING);
+            game.getBatch().draw(keyFrameEat, -100, -400, 200, 800);
+        }
+        else if (sleepButton){
+            CoolDown sleep = new CoolDown(100, 100); //cooldown animation of pet sleeping
+            sleep.update(game.currentTailTime - game.lastTailTime);
+            TextureRegion keyFrameSleep = Assets.sleepAnim.getKeyFrame(sleep.stateTime, Animation.ANIMATION_NONLOOPING);
+            game.getBatch().draw(keyFrameSleep, -100, -400, 200, 800);
         }
 
 
