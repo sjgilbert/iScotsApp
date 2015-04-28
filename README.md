@@ -9,6 +9,7 @@
 * @pickUp @all Testing. Testing. Testing.
 * @pickUp Create "About" modal
 * @pickUp @all Look at and fix documentation.
+* @pickUp resize buttons
 
 ##Medium Priority Items
 
