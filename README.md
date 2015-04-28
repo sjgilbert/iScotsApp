@@ -2,7 +2,6 @@
 
 ##High Priority Items
 
-* @sjg 
 * @csass Continue working on pet cooldown images.
 * @an Adjust settings bars so that icons are to the left of the bars.
 * @pickUp get app on an actual Android device
