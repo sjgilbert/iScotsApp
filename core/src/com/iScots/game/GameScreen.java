@@ -233,12 +233,6 @@ public class GameScreen extends ScreenAdapter {
             game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
         }
 
-        Blink blink = new Blink(100, 100);
-        blink.update(game.currentTailTime - game.lastTailTime + 12);
-        TextureRegion keyFrame1 = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
-        game.getBatch().draw(keyFrame1, -25, 20, 10, 30);
-        game.getBatch().draw(keyFrame1, -8, 25, 10, 30);
-
 
         //The buttons for actions.  Drawn from left to right.
         if (!playButton) {
@@ -262,7 +256,14 @@ public class GameScreen extends ScreenAdapter {
 
         //cooldown animations
         if (!playButton & !eatButton & !sleepButton) {
+            //draw the pet based on its happiness if no button is pressed
             game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
+            Blink blink = new Blink(100, 100); //also draw the blink
+            blink.update(game.currentTailTime - game.lastTailTime + 12);
+            TextureRegion keyFrame1 = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
+            game.getBatch().draw(keyFrame1, -25, 20, 10, 30);
+            game.getBatch().draw(keyFrame1, -8, 25, 10, 30);
+
         }
         else if (playButton){
             CoolDown play = new CoolDown(100, 100); //cooldown animation of pet playing
