@@ -91,7 +91,5 @@ public class Assets {
         blinkAnim = new Animation (0.2f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30));
 
 
-
-
     }
 }

@@ -228,7 +228,7 @@ public class GameScreen extends ScreenAdapter {
         //TODO: Please comment!
         else {
             Tail tail = new Tail(100, 100);
-            tail.update((game.currentTailTime - game.lastTailTime) * 5 * gamePet.getHappiness()/100); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
+            tail.update((game.currentTailTime - game.lastTailTime)); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
             TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);
             game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
         }
