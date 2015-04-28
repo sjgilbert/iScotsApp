@@ -8,7 +8,7 @@
 * @pickUp Decide what happens when the pet hits death, and implement that. Option for starting the game over?
 * @pickUp @all Testing. Testing. Testing.
 * @pickUp Create "About" modal
-* @pickUp Look at and fix documentation.
+* @pickUp @all Look at and fix documentation.
 
 ##Medium Priority Items
 
