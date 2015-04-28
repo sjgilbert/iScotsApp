@@ -39,6 +39,9 @@ public class Assets {
     public static Texture tail2;
     public static Animation tailAnim;
     
+    public static Texture blinkEye;
+    public static Texture openEye;
+    public static Animation blinkAnim;
 
 
     /**
@@ -81,5 +84,14 @@ public class Assets {
         tail2 = new Texture("tail2.png");
 
         tailAnim = new Animation(0.2f, new TextureRegion(tail1, 370, 470, 80, 140), new TextureRegion(tail2, 370, 470, 80, 140));
+
+        blinkEye = new Texture("blinkEye.png");
+        openEye = new Texture("transparent.png");
+
+        blinkAnim = new Animation (0.2f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30));
+
+
+
+
     }
 }

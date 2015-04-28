@@ -228,10 +228,17 @@ public class GameScreen extends ScreenAdapter {
         //TODO: Please comment!
         else {
             Tail tail = new Tail(100, 100);
-            tail.update(game.currentTime - game.lastTime); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
+            tail.update((game.currentTailTime - game.lastTailTime) * 5 * gamePet.getHappiness()/100); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
             TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);
             game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
         }
+
+        Blink blink = new Blink(100, 100);
+        blink.update(game.currentTailTime - game.lastTailTime + 12);
+        TextureRegion keyFrame1 = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
+        game.getBatch().draw(keyFrame1, -25, 20, 10, 30);
+        game.getBatch().draw(keyFrame1, -8, 25, 10, 30);
+
 
         //The buttons for actions.  Drawn from left to right.
         if (!playButton) {
@@ -269,15 +276,15 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        game.currentTime = System.currentTimeMillis()/1000;   //need game.currentTime and game.lastTime for tail animation
-        if (game.currentTime - game.lastTime > 1 && gamePet.isAlive()){  //Provide time in seconds.
-            game.lastTime = game.currentTime;
+        game.currentTailTime = System.currentTimeMillis()/1000;   //need game.currentTime and game.lastTime for tail animation
+        if (game.currentTailTime - game.lastTailTime > 1 && gamePet.isAlive()){  //Provide time in seconds.
+            game.lastTailTime = game.currentTailTime;
         }
         currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
-        if(currentTime - lastTime > 1 && gamePet.isAlive()) {
+        if(currentTime - lastTime > 1) {
 //            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed
 //                gamePet.update("decay");
-//                lastTime++;
+//                lastTime += 1;
 //            }
             lastTime = currentTime;
             //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.

@@ -12,10 +12,10 @@ public class Tail extends GameObject{
 
     public Tail (float x, float y) {
         super(x, y, TAIL_WIDTH, TAIL_HEIGHT);
-        stateTime = 0;
+        stateTime = 0;  //This seems to be the amount of time that it's meant to spend in a given state.
     }
 
     public void update (float deltaTime) {
         stateTime += deltaTime;
-    }
+    }  //I have no idea why this is +=.
 }
