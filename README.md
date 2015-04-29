@@ -13,8 +13,8 @@
 * @pickUp @all Look at and fix up documentation.
 
 ##Known Bugs + Issues
-* blinks + tail wagging occur at the same time
-* buttons stay large until you click away from them
+* #p1 blinks + tail wagging occur at the same time
+* #p1 buttons stay large until you click away from them
 
 ##Future Implementation Options
 * settings + launch screen pages
