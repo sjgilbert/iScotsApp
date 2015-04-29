@@ -9,6 +9,7 @@
 * @pickUp get app on an actual Android device (instructions for deploying are https://github.com/libgdx/libgdx/wiki/Deploying-your-application)
 * @pickUp @all Testing. Testing. Testing.
 * @pickUp @all Look at and fix up documentation.
+* @sam Remove screens
 
 ##Known Bugs + Issues
 * #p1 blinks + tail wagging occur at the same time (cs)
