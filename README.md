@@ -12,7 +12,9 @@
 * @pickUp @all Look at and fix up documentation.
 * @pickUp resize buttons
 
-##Medium Priority Items
+##Known Bugs + Issues
+* blinks + tail wagging occur at the same time
+* buttons stay large until you click away from them
 
 ##Future Implementation Options
 * settings + launch screen pages
