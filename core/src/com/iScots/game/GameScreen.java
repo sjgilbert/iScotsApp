@@ -35,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
     private Rectangle eatBounds;
     private Rectangle sleepBounds;
     private Rectangle settingsBounds;
+    private Rectangle resetBounds;  //This is only used when the pet dies.
 
     private Texture happinessLabel;
     private Texture hungerLabel;
@@ -71,7 +72,7 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(IScotGame game) {
         this.game = game;
 
-        guiCam = new OrthographicCamera(300, 900);   //TODO: Christopher please comment!
+        guiCam = new OrthographicCamera(300, 900);   //This creates an overlay that we use to place textures, since phones have varying amounts of pixels.
         touchPoint = new Vector3(); //Supplies the input for the update method.
 
         gamePet = new Pet();    //Creates and stores a pet for the game.
@@ -86,6 +87,8 @@ public class GameScreen extends ScreenAdapter {
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
         settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
+        resetBounds = new Rectangle(-50, 0, 100, 100);  //Middle right.
+
         currentTime = System.currentTimeMillis() / 1000;
         lastButtonTime = System.currentTimeMillis() / 1000;
         try {        //Pulls the last time from the local file if it is there.
@@ -167,7 +170,14 @@ public class GameScreen extends ScreenAdapter {
                 System.out.println("settings");
                 game.setScreen(game.getSettingsScreen());       //calls the game's set screen method to set the screen to the settingsScreen.
                 return;
-            } else {
+            } else if (resetBounds.contains(touchPoint.x,touchPoint.y) && !gamePet.isAlive())  {  //Used for reset button only if pet is dead.
+                System.out.println("Refresh dead pet.");
+                gamePet.setHappiness(100);
+                gamePet.setHunger(95);
+                gamePet.setTiredness(96);
+            }
+
+            else {
                 System.out.println(touchPoint);     //For testing.
             }
         }
@@ -222,15 +232,18 @@ public class GameScreen extends ScreenAdapter {
 
         //This if is to trigger the message that pops up on death.  Currently the else is the tail animation.
         //TODO: We need to work out what happens on death. The tail should stop moving, but this way it removes the tail on death
-        if(!gamePet.isAlive()) {
-            game.getBatch().draw(blackBar, 0, 0, 100, 100);
-        }
-        //TODO: Please comment!
-        else {
-            Tail tail = new Tail(100, 100);
+        if(gamePet.isAlive()) {
+            Tail tail = new Tail(100, 100);  //Creates new Tail object.
             tail.update((game.currentTailTime - game.lastTailTime)); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
-            TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);
+            TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);  //Calls animation image based on the established statetime.
             game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
+            if (!eatButton && playButton && playButton) {  //Making sure the blink animation does not interfere with other animations.
+                Blink blink = new Blink(100, 100);
+                blink.update(game.currentTailTime - game.lastTailTime);
+                TextureRegion keyFrame1 = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
+                game.getBatch().draw(keyFrame1, -25, 20, 10, 30);
+                game.getBatch().draw(keyFrame1, -8, 25, 10, 30);
+            }
         }
 
 
@@ -265,25 +278,29 @@ public class GameScreen extends ScreenAdapter {
             game.getBatch().draw(keyFrame1, -8, 25, 10, 30);
 
         }
-        else if (playButton){
+        else if (playButton && gamePet.isAlive()){
             CoolDown play = new CoolDown(100, 100); //cooldown animation of pet playing
             play.update(game.currentTailTime - game.lastTailTime);
             TextureRegion keyFramePlay = Assets.playAnim.getKeyFrame(play.stateTime, Animation.ANIMATION_NONLOOPING);
             game.getBatch().draw(keyFramePlay, -100, -400, 200, 800);
         }
-        else if (eatButton){
+        else if (eatButton && gamePet.isAlive()){
             CoolDown eat = new CoolDown(100, 100); //cooldown animation of pet eating
             eat.update(game.currentTailTime - game.lastTailTime);
             TextureRegion keyFrameEat = Assets.eatAnim.getKeyFrame(eat.stateTime, Animation.ANIMATION_NONLOOPING);
             game.getBatch().draw(keyFrameEat, -100, -400, 200, 800);
         }
-        else if (sleepButton){
+        else if (sleepButton && gamePet.isAlive()){
             CoolDown sleep = new CoolDown(100, 100); //cooldown animation of pet sleeping
             sleep.update(game.currentTailTime - game.lastTailTime);
             TextureRegion keyFrameSleep = Assets.sleepAnim.getKeyFrame(sleep.stateTime, Animation.ANIMATION_NONLOOPING);
             game.getBatch().draw(keyFrameSleep, -100, -400, 200, 800);
         }
 
+
+        if (!gamePet.isAlive()){  //Images are drawn in order.  I am therefore placing this here for adjustments to be made after pet death.
+            game.getBatch().draw(Assets.resetButton, -50, 0, 100, 100);
+        }
 
         game.getBatch().end();
 
@@ -300,16 +317,15 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        game.currentTailTime = System.currentTimeMillis()/1000;   //need game.currentTime and game.lastTime for tail animation
-        if (game.currentTailTime - game.lastTailTime > 1 && gamePet.isAlive()){  //Provide time in seconds.
+        game.currentTailTime = System.currentTimeMillis()/1000;   //Tail-relating time variable updates.
+        if (game.currentTailTime - game.lastTailTime > 1 && gamePet.isAlive()){  //Provide time in seconds.  Change time here to adjust animation time.
             game.lastTailTime = game.currentTailTime;
         }
         currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
         if(currentTime - lastTime > 1) {
-            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed
+            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed.  Note: Adjust based on line directly above!
                 gamePet.update("decay");
                 lastTime += 1;
-                System.out.println(currentTime - lastTime);
             }
             lastTime = currentTime;
             //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
@@ -318,11 +334,13 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
-//            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
+            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
                 gamePet.update("decay");
             }
-//        }
+        }
         update();
         draw();
+
+
     }
 }
