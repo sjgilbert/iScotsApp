@@ -2,7 +2,6 @@
 
 ##High Priority Items
 
-* @csass Coooldown images: fix up and edit.
 * @an Adjust settings bars so that icons are to the left of the bars.
 * @clf Create death image, implement the post-death status.
 * @sam Look into gameplay. Fix it up so that it is more game-like.
