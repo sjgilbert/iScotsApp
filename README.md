@@ -15,6 +15,7 @@
 ##Known Bugs + Issues
 * #p1 blinks + tail wagging occur at the same time
 * #p1 buttons stay large until you click away from them
+* #p2 tail + eyes dissapear on hospitalization
 
 ##Future Implementation Options
 * settings + launch screen pages
