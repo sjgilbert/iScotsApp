@@ -10,6 +10,7 @@
 * @pickUp @all Testing. Testing. Testing.
 * @pickUp @all Look at and fix up documentation.
 * @sam Remove screens
+* @an make icon for poster
 
 ##Known Bugs + Issues
 * #p1 blinks + tail wagging occur at the same time (cs)
