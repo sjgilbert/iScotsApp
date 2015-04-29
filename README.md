@@ -2,7 +2,7 @@
 
 ##High Priority Items
 
-* @csass Continue working on pet cooldown images.
+* @csass Coooldown images: fix up and edit.
 * @an Adjust settings bars so that icons are to the left of the bars.
 * @clf Decide what happens when the pet hits death, and implement that. Option for starting the game over?
 * @sam Create "About" modal
