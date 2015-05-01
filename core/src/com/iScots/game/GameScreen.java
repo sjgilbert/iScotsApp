@@ -130,14 +130,14 @@ public class GameScreen extends ScreenAdapter {
                 if (!playOnCooldown) {
                     System.out.println("play"); //These println are here for testing.
                     gamePet.update("play");
-                    playOnCooldown = !playOnCooldown;   //puts the action on cooldown
+                    playOnCooldown = true;   //puts the action on cooldown
                     timePlayed = currentTime;   //marks the start time for the cooldown
                     return;
                 } else {
                     if (currentTime - timePlayed < PLAY_TIME) {  //for when the cooldown isn't over
                         System.out.println("play on cooldown");
                     } else {
-                        playOnCooldown = !playOnCooldown;   //takes the action off cooldown
+                        playOnCooldown = false;   //takes the action off cooldown
                     }
                 }
             } else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
@@ -146,14 +146,14 @@ public class GameScreen extends ScreenAdapter {
                 if (!eatOnCooldown) {
                     System.out.println("feed");
                     gamePet.update("feed");
-                    eatOnCooldown = !eatOnCooldown;
+                    eatOnCooldown = true;
                     timeAte = currentTime;
                     return;
                 } else {
                     if (currentTime - timeAte < EAT_TIME) {
                         System.out.println("eat on cooldown");
                     } else {
-                        eatOnCooldown = !eatOnCooldown;
+                        eatOnCooldown = false;
                     }
                 }
             } else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
@@ -162,14 +162,14 @@ public class GameScreen extends ScreenAdapter {
                 if (!sleepOnCooldown) {
                     System.out.println("sleep");
                     gamePet.update("sleep");
-                    sleepOnCooldown = !sleepOnCooldown;
+                    sleepOnCooldown = true;
                     timeSlept = currentTime;
                     return;
                 } else {
                     if (currentTime - timeSlept < SLEEP_TIME) {
                         System.out.println("sleep on cooldown");
                     } else {
-                        sleepOnCooldown = !sleepOnCooldown;
+                        sleepOnCooldown = false;
                     }
                 }
             } else if (settingsBounds.contains(touchPoint.x, touchPoint.y)) {
@@ -242,7 +242,7 @@ public class GameScreen extends ScreenAdapter {
             tail.update((game.currentTailTime - game.lastTailTime)); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
             TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);  //Calls animation image based on the established statetime.
             game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
-            if (!eatButton && playButton && playButton) {  //Making sure the blink animation does not interfere with other animations.
+            if (!eatButton && playButton && sleepButton) {  //Making sure the blink animation does not interfere with other animations.
                 Blink blink = new Blink(100, 100);
                 blink.update(game.currentTailTime - game.lastTailTime);
                 TextureRegion keyFrame1 = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
@@ -256,19 +256,19 @@ public class GameScreen extends ScreenAdapter {
         if (!playButton) {
             game.getBatch().draw(Assets.ball, -150, -450, 75, 150);
         }
-        else if (playButton){  //Draw it larger.
+        else if (playButton && gamePet.isAlive()){  //Draw it larger.
             game.getBatch().draw(Assets.ball, -150, -450, 100, 300);
         }
         if (!eatButton) {
             game.getBatch().draw(Assets.bone, -38, -450, 75, 150);
         }
-        else if (eatButton){
+        else if (eatButton && gamePet.isAlive()){
             game.getBatch().draw(Assets.bone, -50, -450, 100, 300);
         }
-        if (sleepButton){
+        if (!sleepButton){
             game.getBatch().draw(Assets.bed, 75, -450, 75, 150);
         }
-        else if (!sleepButton){
+        else if (sleepButton && gamePet.isAlive()){
             game.getBatch().draw(Assets.bed, 50, -450, 100, 300);
         }
 
