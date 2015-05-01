@@ -104,6 +104,7 @@ public class GameScreen extends ScreenAdapter {
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
             timeOfDeath = Double.valueOf(strings[4]);
+            isDead = Boolean.valueOf(strings[5]);
         } catch (Throwable e) {
         }
         happinessLabel = new Texture("happiness.png");
@@ -264,7 +265,7 @@ public class GameScreen extends ScreenAdapter {
         else if (eatButton){
             game.getBatch().draw(Assets.bone, -50, -450, 100, 300);
         }
-        if (!sleepButton){
+        if (sleepButton){
             game.getBatch().draw(Assets.bed, 75, -450, 75, 150);
         }
         else if (!sleepButton){
@@ -306,6 +307,7 @@ public class GameScreen extends ScreenAdapter {
             game.getBatch().draw(Assets.deathMessage, -50, 0, 100, 100);
             game.getBatch().draw(Assets.redBar, -50, -100, 100, 100);
             game.getBatch().draw(Assets.greenBar, -50, -100, (int) (100 *(currentTime-timeOfDeath)/86400), 100);
+            System.out.println(currentTime-timeOfDeath);
         }
 
         game.getBatch().end();
@@ -341,6 +343,7 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
             filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
+            filehandle.writeString(Boolean.toString(isDead) + "\n", true);
 
             for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
                 gamePet.update("decay");

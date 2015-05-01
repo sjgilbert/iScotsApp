@@ -115,11 +115,18 @@ public class Pet {
         return tiredness;
     }
 
-    public void setHunger(float h){hunger = h; }
+    public void setHunger(float h){
+        hunger = h;
+        updateState();
+    }
 
-    public void setHappiness(float h) {happiness = h; }
+    public void setHappiness(float h) {happiness = h;
+        updateState();
+    }
 
-    public void setTiredness(float t){tiredness = t; }
+    public void setTiredness(float t){tiredness = t;
+        updateState();
+    }
 
     private void setPetImage(Texture texture) {
         petImage = texture;
