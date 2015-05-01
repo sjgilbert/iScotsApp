@@ -104,7 +104,6 @@ public class GameScreen extends ScreenAdapter {
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
             timeOfDeath = Double.valueOf(strings[4]);
-            System.out.println(strings[1]);
         } catch (Throwable e) {
         }
         happinessLabel = new Texture("happiness.png");
@@ -350,6 +349,7 @@ public class GameScreen extends ScreenAdapter {
 
         if (!gamePet.isAlive() && !isDead){  //Sets isDead boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
             timeOfDeath = currentTime;
+            isDead = true;
         }
         if (isDead && currentTime - timeOfDeath > 86400){
             isDead = false;
