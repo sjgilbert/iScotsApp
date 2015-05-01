@@ -60,6 +60,7 @@ public class Assets {
     public static Texture play3;
     public static Animation playAnim;
 
+    public static Texture deathMessage;
 
     /**
      *Loads in all the assets when the app starts.
@@ -127,6 +128,7 @@ public class Assets {
 
         playAnim = new Animation(0.15f, new TextureRegion(play1), new TextureRegion(play2), new TextureRegion(play3));
 
+        deathMessage = new Texture("deathmessage.png");
 
     }
 }

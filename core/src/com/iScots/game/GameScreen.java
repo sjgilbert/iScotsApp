@@ -60,9 +60,13 @@ public class GameScreen extends ScreenAdapter {
 
     private double lastButtonTime; //The last time a button (any stat button) was pressed.
 
-    //TODO: Christopher please comment!
+
     private double currentTime; //Value taken directly from
     private double lastTime;  //Last time the stats were updated.
+
+    //Death stuff.
+    private boolean isDead;  //For use with certain functions.
+    private double timeOfDeath;  //Records exact time of death.
 
     /**
      * Initializes the screen.
@@ -91,6 +95,7 @@ public class GameScreen extends ScreenAdapter {
 
         currentTime = System.currentTimeMillis() / 1000;
         lastButtonTime = System.currentTimeMillis() / 1000;
+        timeOfDeath = System.currentTimeMillis()/1000;
         try {        //Pulls the last time from the local file if it is there.
             FileHandle filehandle = Gdx.files.local(".IScotGame");
             String[] strings = filehandle.readString().split("\n");  //"strings" contains four objects.  They are used below:
@@ -98,6 +103,7 @@ public class GameScreen extends ScreenAdapter {
             gamePet.setHappiness(Float.parseFloat(strings[1])); //Sets previous happiness.
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
+            timeOfDeath = Double.valueOf(strings[4]);
             System.out.println(strings[1]);
         } catch (Throwable e) {
         }
@@ -231,7 +237,6 @@ public class GameScreen extends ScreenAdapter {
         //game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
 
         //This if is to trigger the message that pops up on death.  Currently the else is the tail animation.
-        //TODO: We need to work out what happens on death. The tail should stop moving, but this way it removes the tail on death
         if(gamePet.isAlive()) {
             Tail tail = new Tail(100, 100);  //Creates new Tail object.
             tail.update((game.currentTailTime - game.lastTailTime)); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
@@ -263,12 +268,12 @@ public class GameScreen extends ScreenAdapter {
         if (!sleepButton){
             game.getBatch().draw(Assets.bed, 75, -450, 75, 150);
         }
-        else if (sleepButton){
+        else if (!sleepButton){
             game.getBatch().draw(Assets.bed, 50, -450, 100, 300);
         }
 
         //cooldown animations
-        if (!playButton & !eatButton & !sleepButton) {
+        if (!playButton && !eatButton && !sleepButton && gamePet.isAlive()) {
             //draw the pet based on its happiness if no button is pressed
             game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
             Blink blink = new Blink(100, 100); //also draw the blink
@@ -299,7 +304,9 @@ public class GameScreen extends ScreenAdapter {
 
 
         if (!gamePet.isAlive()){  //Images are drawn in order.  I am therefore placing this here for adjustments to be made after pet death.
-            game.getBatch().draw(Assets.resetButton, -50, 0, 100, 100);
+            game.getBatch().draw(Assets.deathMessage, -50, 0, 100, 100);
+            game.getBatch().draw(Assets.redBar, -50, -100, 100, 100);
+            game.getBatch().draw(Assets.greenBar, -50, -100, (int) (100 *(currentTime-timeOfDeath)/86400), 100);
         }
 
         game.getBatch().end();
@@ -334,10 +341,24 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
+            filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
+
             for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
                 gamePet.update("decay");
             }
         }
+
+        if (!gamePet.isAlive() && !isDead){  //Sets isDead boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
+            timeOfDeath = currentTime;
+        }
+        if (isDead && currentTime - timeOfDeath > 86400){
+            isDead = false;
+            System.out.println("Refresh dead pet.");
+            gamePet.setHappiness(100);
+            gamePet.setHunger(95);
+            gamePet.setTiredness(96);
+        }
+
         update();
         draw();
 
