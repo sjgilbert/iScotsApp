@@ -18,6 +18,7 @@
 * #p1 blinks + tail wagging occur at the same time (cs)
 * #p1 buttons stay large until you click away from them (cs)
 * #p2 tail + eyes dissapear on hospitalization
+* #p1 After hitting the "refresh" button, the pet is still crying even though its levels are all high. (clf)
 
 ##Future Implementation Options
 * settings + launch screen pages
