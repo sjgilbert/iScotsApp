@@ -23,53 +23,45 @@ public class Pet {
      */
     public Pet() {
         this.happiness = 100f;
-        this.hunger = 95f;
-        this.tiredness = 96f;
+        this.hunger = 100f;
+        this.tiredness = 100f;
         this.petImage = Assets.pet5;
     }
 
     //The decay is based on the formula for compound interest.
     public void decay() {
         if (tiredness > 0.5) { tiredness = tiredness*0.99995f;}
-        if (hunger > 0.5) { hunger = hunger*0.99995f;}
-        if (happiness > 0.5) { happiness = happiness*0.99995f;}
+        if (hunger > 0.5) { hunger = hunger*0.99993f;}
+        if (happiness > 0.5) { happiness = happiness*0.99992f;}
+        updateState();
     }
 
     public void sleep() {
-        if (tiredness < 100) {
-            tiredness += 25;
-        }
-
-        if (tiredness < .5) {
-            onDeath();
-        } else if (tiredness > 100) {
+        tiredness += 25;
+        if (tiredness > 100) {
             tiredness = 100;
+        } else if (tiredness < .5) {
+            onDeath();
         }
         updateState();
     }
 
     public void feed() {
-        if (hunger < 100) {
-            hunger += 25;
-        }
-
-        if (hunger < .5) {
-            onDeath();
-        } else if (hunger > 100) {
+        hunger += 25;
+        if (hunger > 100) {
             hunger = 100;
+        } else if (hunger < .5) {
+            onDeath();
         }
         updateState();
     }
 
     public void play() {
-        if (happiness < 100) {
-            happiness += 25;
-        }
-
-        if (happiness < .5) {
-            onDeath();
-        } else if (happiness > 100) {
+        happiness += 25;
+        if (happiness > 100) {
             happiness = 100;
+        } else if (happiness < .5) {
+            onDeath();
         }
         updateState();
     }
@@ -80,6 +72,9 @@ public class Pet {
      * @return true if pet is alive, false otherwise
      */
     public boolean isAlive() {
+        if (happiness < 0.5 || hunger < 0.5 || tiredness < 0.5) {
+            onDeath();
+        }
         return happiness!=0 && hunger!=0 && tiredness!=0;
     }
 

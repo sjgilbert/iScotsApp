@@ -203,8 +203,8 @@ public class GameScreen extends ScreenAdapter {
 
     private void reset() {
         gamePet.setHappiness(100);
-        gamePet.setHunger(95);
-        gamePet.setTiredness(96);
+        gamePet.setHunger(100);
+        gamePet.setTiredness(100);
     }
 
     private void drawStatusBars() {
@@ -363,7 +363,7 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
             filehandle.writeString(Boolean.toString(isDead) + "\n", true);
 
-            for(int i=0; i<300; i++) {       //This loop is to accelerate time for testing.
+            for(int i=0; i<3600; i++) {       //This loop is to accelerate time for testing.
                 gamePet.decay();
             }
         }
