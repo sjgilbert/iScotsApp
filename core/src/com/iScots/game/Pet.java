@@ -28,39 +28,50 @@ public class Pet {
         this.petImage = Assets.pet5;
     }
 
-    /**
-     *
-     * @param action The command passed to determine which attribute to increase.
-     */
-    public void update(String action) {
-        if (action.equals("sleep")) {
-            if (tiredness < 100) { tiredness += 0.8 * multiplier(tiredness);}
-        } else if (action.equals("feed")) {
-            if (hunger < 100) { hunger += 0.8 * multiplier(hunger);}
-        } else if (action.equals("play")) {
-            if (happiness < 100) { happiness += 0.8 * multiplier(happiness);}
+    //The decay is based on the formula for compound interest.
+    public void decay() {
+        if (tiredness > 0.5) { tiredness = tiredness*0.99995f;}
+        if (hunger > 0.5) { hunger = hunger*0.99995f;}
+        if (happiness > 0.5) { happiness = happiness*0.99995f;}
+    }
+
+    public void sleep() {
+        if (tiredness < 100) {
+            tiredness += 25;
         }
-        else if (action.equals("decay")) {                          //The decay is based on the formula for compound interest.
-            if (tiredness > 0.5) { tiredness = tiredness*0.99995f;}
-            if (hunger > 0.5) { hunger = hunger*0.99995f;}
-            if (happiness > 0.5) { happiness = happiness*0.99995f;}
-        }
-        else {
-            System.out.println("illegal argument");
-        }
-        //These lines are to make sure the attributes don't go out of bounds, and control the death sequence.
-        if (happiness < .5) {
-            onDeath();}
-        else if (happiness > 100) {happiness = 100;}
-        if (hunger < .5) {
-            onDeath();
-        }
-        else if (hunger > 100) {hunger = 100;}
+
         if (tiredness < .5) {
             onDeath();
+        } else if (tiredness > 100) {
+            tiredness = 100;
         }
-        else if (tiredness > 100) {tiredness = 100;}
-        updateState(); //to set the proper image.
+        updateState();
+    }
+
+    public void feed() {
+        if (hunger < 100) {
+            hunger += 25;
+        }
+
+        if (hunger < .5) {
+            onDeath();
+        } else if (hunger > 100) {
+            hunger = 100;
+        }
+        updateState();
+    }
+
+    public void play() {
+        if (happiness < 100) {
+            happiness += 25;
+        }
+
+        if (happiness < .5) {
+            onDeath();
+        } else if (happiness > 100) {
+            happiness = 100;
+        }
+        updateState();
     }
 
     /**
@@ -82,25 +93,16 @@ public class Pet {
     }
 
     /**
-     * A number used to shift the values of the attributes.  It is the function of the normal distribution.
-     * @param x The value of the attribute being altered.
-     * @return
-     */
-        public float multiplier(float x) {
-            return (float) (1/Math.sqrt(2*Math.PI)*Math.exp(-Math.pow(-x,2)/(2*1.5)));
-        }
-
-    /**
      * Sets the state of the pet.  Currently only sets based on happiness.
      * TODO: implement a better system for changing the pet's image.
      */
         private void updateState() {
-            if (happiness < 100/6) {setPetImage(Assets.pet0);}
-            else if (happiness < 2*100/6) {setPetImage(Assets.pet1);}
-            else if (happiness < 3*100/6) {setPetImage(Assets.pet2);}
-            else if (happiness < 4*100/6) {setPetImage(Assets.pet3);}
-            else if (happiness < 5*100/6) {setPetImage(Assets.pet4);}
-            else if (happiness <= 6*100/6) {setPetImage(Assets.pet5);}
+            if (happiness < 100/6 || hunger < 100/6 || tiredness < 100/6) {setPetImage(Assets.pet0);}
+            else if (happiness < 2*100/6 || hunger < 2*100/6 || tiredness < 2*100/6) {setPetImage(Assets.pet1);}
+            else if (happiness < 3*100/6 || hunger < 3*100/6 || tiredness < 3*100/6) {setPetImage(Assets.pet2);}
+            else if (happiness < 4*100/6 && (hunger+tiredness) > 2.0*200/6) {setPetImage(Assets.pet3);}
+            else if (happiness < 5*100/6 && (hunger+tiredness) > 2.5*200/6) {setPetImage(Assets.pet4);}
+            else if (happiness <= 6*100/6 && (hunger+tiredness) > 3*200/6) {setPetImage(Assets.pet5);}
         }
 
     public float getHunger(){
