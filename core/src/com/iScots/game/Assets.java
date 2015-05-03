@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Assets {
     public static Texture gameScreen;   //The backgrounds for the various screens
-    public static Texture mainMenuScreen;
-    public static Texture settingsScreen;
+    //public static Texture mainMenuScreen;
+    //public static Texture settingsScreen;
 
     public static Texture pet0;     //The various states of the pet's happiness with 5 the best and 0 the worst.  Pets drawn by Casey Sass.
     public static Texture pet1;
@@ -27,12 +27,12 @@ public class Assets {
     public static Texture bone;
     public static Texture bed;
 
-    public static Texture playButton; //The action buttons on the launch screen. Created by Annabelle.
-    public static Texture aboutButton;
+    //public static Texture playButton; //The action buttons on the launch screen. Created by Annabelle.
+    //public static Texture aboutButton;
     public static Texture iScotName;
 
-    public static Texture settingsButton; //Play page --> setting page
-    public static Texture returnButton; //Settings page --> play page
+    //public static Texture settingsButton; //Play page --> setting page
+    //public static Texture returnButton; //Settings page --> play page
     public static Texture resetButton; //reset button on settings screen
 
     public static Texture tail1;
@@ -67,8 +67,8 @@ public class Assets {
      */
     public static void load() {
         gameScreen = new Texture("gameScreen.png");
-        mainMenuScreen = new Texture("launchBackground.jpg");
-        settingsScreen = new Texture("settingsScreen.png");
+        //mainMenuScreen = new Texture("launchBackground.jpg");
+        //settingsScreen = new Texture("settingsScreen.png");
 
         //images of the iScot pet
         pet0 = new Texture("pet0.png");
@@ -90,12 +90,12 @@ public class Assets {
         bed = new Texture("bed.png");
 
         //images for the launch page.
-        iScotName = new Texture("iScotLabel.png");
-        playButton = new Texture("playButton.png");
-        aboutButton = new Texture("aboutButton.png");
+        //iScotName = new Texture("iScotLabel.png");
+        //playButton = new Texture("playButton.png");
+        //aboutButton = new Texture("aboutButton.png");
 
-        settingsButton = new Texture("settingsCog.png");
-        returnButton = new Texture("returnButton.png");
+        //settingsButton = new Texture("settingsCog.png");
+        //returnButton = new Texture("returnButton.png");
         resetButton = new Texture("refreshButton.png");
 
         tail1 = new Texture("tail1.png");

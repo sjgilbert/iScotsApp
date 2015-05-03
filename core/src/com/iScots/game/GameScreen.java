@@ -27,15 +27,16 @@ public class GameScreen extends ScreenAdapter {
     private Texture redBar;
     private Texture blackBar;
 
-    //Temporary placeholder for the settings button.
-    private Texture settingsButton;
+    //private Texture settingsButton;
 
     //These define the bounds of the touchboxes for the actions.
     private Rectangle playBounds;
     private Rectangle eatBounds;
     private Rectangle sleepBounds;
     private Rectangle settingsBounds;
-    private Rectangle resetBounds;  //This is only used when the pet dies.
+    private Rectangle resetBounds;  //Used for testing
+
+    private Texture resetButton;
 
     private Texture happinessLabel;
     private Texture hungerLabel;
@@ -59,7 +60,6 @@ public class GameScreen extends ScreenAdapter {
     private boolean sleepButton = false;
 
     private double lastButtonTime; //The last time a button (any stat button) was pressed.
-
 
     private double currentTime; //Value taken directly from
     private double lastTime;  //Last time the stats were updated.
@@ -85,13 +85,15 @@ public class GameScreen extends ScreenAdapter {
         redBar = Assets.redBar;
         blackBar = Assets.blackBar;
 
-        settingsButton = Assets.settingsButton;     //Upper right
+        //settingsButton = Assets.settingsButton;     //Upper right
+
+        resetButton = Assets.resetButton;
 
         playBounds = new Rectangle(-150, -450, 75, 150);    //lower left
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
-        settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
-        resetBounds = new Rectangle(-50, 0, 100, 100);  //Middle right.
+        //settingsBounds = new Rectangle(120, 420, 30, 30);       //upper right
+        resetBounds = new Rectangle(120, 420, 30, 30);  //for testing.  in place of settings button now
 
         currentTime = System.currentTimeMillis() / 1000;
         lastButtonTime = System.currentTimeMillis() / 1000;
@@ -125,73 +127,77 @@ public class GameScreen extends ScreenAdapter {
             sleepButton = false;
             guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                playButton = true; //Note that the button is pressed.
-                lastButtonTime = System.currentTimeMillis() / 1000;  //Reset last button time to now.
-                if (!playOnCooldown) {
-                    System.out.println("play"); //These println are here for testing.
-                    gamePet.update("play");
-                    playOnCooldown = true;   //puts the action on cooldown
-                    timePlayed = currentTime;   //marks the start time for the cooldown
-                    return;
-                } else {
-                    if (currentTime - timePlayed < PLAY_TIME) {  //for when the cooldown isn't over
-                        System.out.println("play on cooldown");
-                    } else {
-                        playOnCooldown = false;   //takes the action off cooldown
-                    }
-                }
+                playWithPet();
             } else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
-                eatButton = true;
-                lastButtonTime = System.currentTimeMillis() / 1000;
-                if (!eatOnCooldown) {
-                    System.out.println("feed");
-                    gamePet.update("feed");
-                    eatOnCooldown = true;
-                    timeAte = currentTime;
-                    return;
-                } else {
-                    if (currentTime - timeAte < EAT_TIME) {
-                        System.out.println("eat on cooldown");
-                    } else {
-                        eatOnCooldown = false;
-                    }
-                }
+                feedPet();
             } else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
-                sleepButton = true;
-                lastButtonTime = System.currentTimeMillis() / 1000;
-                if (!sleepOnCooldown) {
-                    System.out.println("sleep");
-                    gamePet.update("sleep");
-                    sleepOnCooldown = true;
-                    timeSlept = currentTime;
-                    return;
-                } else {
-                    if (currentTime - timeSlept < SLEEP_TIME) {
-                        System.out.println("sleep on cooldown");
-                    } else {
-                        sleepOnCooldown = false;
-                    }
-                }
-            } else if (settingsBounds.contains(touchPoint.x, touchPoint.y)) {
-                System.out.println("settings");
-                game.setScreen(game.getSettingsScreen());       //calls the game's set screen method to set the screen to the settingsScreen.
-                return;
-            } else if (resetBounds.contains(touchPoint.x,touchPoint.y) && !gamePet.isAlive())  {  //Used for reset button only if pet is dead.
-                System.out.println("Refresh dead pet.");
-                gamePet.setHappiness(100);
-                gamePet.setHunger(95);
-                gamePet.setTiredness(96);
-            }
-
-            else {
+                restPet();
+            } else if (resetBounds.contains(touchPoint.x, touchPoint.y)) {  //Used for reset button only if pet is dead.
+                reset();
+            } else {
                 System.out.println(touchPoint);     //For testing.
             }
+            if (currentTime - lastButtonTime > 5) {  //Makes the button shrink back down after 5 seconds.
+                playButton = false;
+                eatButton = false;
+                sleepButton = false;
+            }
         }
-        if (currentTime - lastButtonTime > 5){  //Makes the button shrink back down after 5 seconds.
-            playButton = false;
-            eatButton = false;
-            sleepButton = false;
+    }
+
+    private void restPet() {
+        sleepButton = true;
+        lastButtonTime = System.currentTimeMillis() / 1000;
+        if (!sleepOnCooldown) {
+            System.out.println("sleep");
+            gamePet.update("sleep");
+            sleepOnCooldown = true;
+            timeSlept = currentTime;
+            return;
+        } else if (currentTime - timeSlept < SLEEP_TIME) {
+            System.out.println("sleep on cooldown");
+        } else {
+            sleepOnCooldown = false;
         }
+    }
+
+    private void feedPet() {
+        eatButton = true;
+        lastButtonTime = System.currentTimeMillis() / 1000;
+        if (!eatOnCooldown) {
+            System.out.println("feed");
+            gamePet.update("feed");
+            eatOnCooldown = true;
+            timeAte = currentTime;
+            return;
+        } else if (currentTime - timeAte < EAT_TIME) {
+            System.out.println("eat on cooldown");
+        } else {
+            eatOnCooldown = false;
+        }
+    }
+
+    private void playWithPet() {
+        playButton = true; //Note that the button is pressed.
+        lastButtonTime = System.currentTimeMillis() / 1000;  //Reset last button time to now.
+        if (!playOnCooldown) {
+            System.out.println("play"); //These println are here for testing.
+            gamePet.update("play");
+            playOnCooldown = true;   //puts the action on cooldown
+            timePlayed = currentTime;   //marks the start time for the cooldown
+            return;
+        } else if (currentTime - timePlayed < PLAY_TIME) {  //for when the cooldown isn't over
+            System.out.println("play on cooldown");
+        } else {
+            playOnCooldown = false;   //takes the action off cooldown
+        }
+    }
+
+    private void reset() {
+        System.out.println("Refresh dead pet.");
+        gamePet.setHappiness(100);
+        gamePet.setHunger(95);
+        gamePet.setTiredness(96);
     }
 
     /**
@@ -231,7 +237,7 @@ public class GameScreen extends ScreenAdapter {
         game.getBatch().draw(fatigueLabel, -120, 150, 25, 50);
 
         //The settings button in the upper right corner.
-        game.getBatch().draw(settingsButton, 120, 420, 30, 30);
+        game.getBatch().draw(resetButton, 120, 420, 30, 30);
 
         //The pet in the center of the screen.
         //game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
@@ -345,7 +351,7 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
             filehandle.writeString(Boolean.toString(isDead) + "\n", true);
 
-            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
+            for(int i=0; i<300; i++) {       //This loop is to simulate an hour every second for testing.
                 gamePet.update("decay");
             }
         }
@@ -356,10 +362,7 @@ public class GameScreen extends ScreenAdapter {
         }
         if (isDead && currentTime - timeOfDeath > 86400){
             isDead = false;
-            System.out.println("Refresh dead pet.");
-            gamePet.setHappiness(100);
-            gamePet.setHunger(95);
-            gamePet.setTiredness(96);
+            reset();
         }
 
         update();

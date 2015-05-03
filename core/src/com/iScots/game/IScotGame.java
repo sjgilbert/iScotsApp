@@ -16,9 +16,9 @@ public class IScotGame extends Game {
 
 
     //The three screens for the game.
-    private MainMenuScreen mainMenuScreen;
+    //private MainMenuScreen mainMenuScreen;
     private GameScreen gameScreen;
-    private SettingsScreen settingsScreen;
+    //private SettingsScreen settingsScreen;
 
     @Override
     public void create () {
@@ -27,12 +27,12 @@ public class IScotGame extends Game {
         Assets.load();  //Loads in the assets
 
         //Creating the screens
-        mainMenuScreen = new MainMenuScreen(this);
+        //mainMenuScreen = new MainMenuScreen(this);
         gameScreen = new GameScreen(this);
-        settingsScreen = new SettingsScreen(this);
+        //settingsScreen = new SettingsScreen(this);
 
         //Setting the initial screen
-        setScreen(mainMenuScreen);
+        setScreen(gameScreen);
 
         lastTailTime = System.currentTimeMillis()/1000;     //for tail-wagging
         currentTailTime = System.currentTimeMillis()/1000;
@@ -44,17 +44,17 @@ public class IScotGame extends Game {
         super.render();
     }
 
-    public MainMenuScreen getMainMenuScreen() {
-        return mainMenuScreen;
-    }
+//    public MainMenuScreen getMainMenuScreen() {
+//        return mainMenuScreen;
+//    }
 
     public GameScreen getGameScreen() {
         return gameScreen;
     }
 
-    public SettingsScreen getSettingsScreen() {
-        return settingsScreen;
-    }
+//    public SettingsScreen getSettingsScreen() {
+//        return settingsScreen;
+//    }
 
     public SpriteBatch getBatch() { return batch;}
 }
