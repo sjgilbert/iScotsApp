@@ -144,7 +144,7 @@ public class GameScreen extends ScreenAdapter {
 
         }
 
-        //checkAndHandleCooldowns();
+        checkAndHandleCooldowns();
     }
 
     private void checkAndHandleCooldowns() {
@@ -168,7 +168,6 @@ public class GameScreen extends ScreenAdapter {
             gamePet.sleep();
             sleepOnCooldown = true;
             actionTime = currentTime;
-            return;
         } else {
             System.out.println("sleep on cooldown");
         }
@@ -182,7 +181,6 @@ public class GameScreen extends ScreenAdapter {
             gamePet.feed();
             eatOnCooldown = true;
             actionTime = currentTime;
-            return;
         } else {
             System.out.println("eat on cooldown");
         }
@@ -196,7 +194,6 @@ public class GameScreen extends ScreenAdapter {
             gamePet.play();
             playOnCooldown = true;   //puts the action on cooldown
             actionTime = currentTime;   //marks the start time for the cooldown
-            return;
         } else {
             System.out.println("play on cooldown");
         }
