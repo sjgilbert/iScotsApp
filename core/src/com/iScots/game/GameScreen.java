@@ -63,7 +63,7 @@ public class GameScreen extends ScreenAdapter {
     private double lastTime;  //Last time the stats were updated.
 
     //Death stuff.
-    private boolean isDead;  //For use with certain functions.
+    private boolean isDeadKnown;  //For use with certain functions.
     private double timeOfDeath;  //Records exact time of death.
 
     /**
@@ -85,8 +85,6 @@ public class GameScreen extends ScreenAdapter {
 
         //settingsButton = Assets.settingsButton;     //Upper right
 
-        resetButton = Assets.resetButton;
-
         playBounds = new Rectangle(-150, -450, 75, 150);    //lower left
         eatBounds = new Rectangle(-38, -450, 75, 150);      //lower middle
         sleepBounds = new Rectangle(75, -450, 75, 150);     //lower right
@@ -104,7 +102,7 @@ public class GameScreen extends ScreenAdapter {
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
             timeOfDeath = Double.valueOf(strings[4]);
-            isDead = Boolean.valueOf(strings[5]);
+            isDeadKnown = Boolean.valueOf(strings[5]);
         } catch (Throwable e) {
         }
         happinessLabel = new Texture("happiness.png");
@@ -363,15 +361,21 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
             filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
-            filehandle.writeString(Boolean.toString(isDead) + "\n", true);
+            filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
+
+            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
+                gamePet.decay();
+            }
+            filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
         }
 
-        if (!gamePet.isAlive() && !isDead){  //Sets isDead boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
+        if (!gamePet.isAlive() && !isDeadKnown){  //Sets isDeadKnown boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
             timeOfDeath = currentTime;
-            isDead = true;
+            isDeadKnown = true;
         }
-        if (isDead && currentTime - timeOfDeath > 86400){
-            isDead = false;
+        if (isDeadKnown && currentTime - timeOfDeath > 86400){
+            isDeadKnown = false;
+            System.out.println("Refresh dead pet.");
             reset();
         }
 
