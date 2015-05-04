@@ -205,6 +205,7 @@ public class GameScreen extends ScreenAdapter {
         gamePet.setHappiness(60);
         gamePet.setHunger(60);
         gamePet.setTiredness(60);
+        isDeadKnown = false;
     }
 
     private void drawStatusBars() {
@@ -376,7 +377,6 @@ public class GameScreen extends ScreenAdapter {
             isDeadKnown = true;
         }
         if (isDeadKnown && currentTime - timeOfDeath > 86400){
-            isDeadKnown = false;
             System.out.println("Refresh dead pet.");
             reset();
         }
