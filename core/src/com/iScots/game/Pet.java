@@ -31,7 +31,7 @@ public class Pet {
     //The decay is based on the formula for compound interest.
     public void decay() {
         if (tiredness > 0.5) { tiredness = tiredness*0.99995f;}
-        if (hunger > 0.5) { hunger = hunger*0.99993f;}
+        if (hunger > 0.5) { hunger = hunger*0.99994f;}
         if (happiness > 0.5) { happiness = happiness*0.99992f;}
         updateState();
     }
@@ -47,7 +47,7 @@ public class Pet {
     }
 
     public void feed() {
-        hunger += 25;
+        hunger += 10;
         if (hunger > 100) {
             hunger = 100;
         } else if (hunger < .5) {
@@ -57,7 +57,7 @@ public class Pet {
     }
 
     public void play() {
-        happiness += 25;
+        happiness += 3;
         if (happiness > 100) {
             happiness = 100;
         } else if (happiness < .5) {
@@ -68,7 +68,7 @@ public class Pet {
 
     /**
      * Method for checking the state of the pet.  Checks all attributes to see if any
-     * are equal to 0.
+     * are equal to 0.  Also triggers death sequence.
      * @return true if pet is alive, false otherwise
      */
     public boolean isAlive() {

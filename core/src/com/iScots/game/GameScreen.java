@@ -44,8 +44,8 @@ public class GameScreen extends ScreenAdapter {
 
     //The variables needed for cooldowns
     private static final double PLAY_TIME = 3;
-    private static final double EAT_TIME = 5;
-    private static final double SLEEP_TIME = 10;
+    private static final double EAT_TIME = 10;
+    private static final double SLEEP_TIME = 60;
 
     private double actionTime;
 
@@ -202,9 +202,9 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void reset() {
-        gamePet.setHappiness(100);
-        gamePet.setHunger(100);
-        gamePet.setTiredness(100);
+        gamePet.setHappiness(60);
+        gamePet.setHunger(60);
+        gamePet.setTiredness(60);
     }
 
     private void drawStatusBars() {
@@ -350,7 +350,9 @@ public class GameScreen extends ScreenAdapter {
         currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
         if(currentTime - lastTime > 1) {
             while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed.  Note: Adjust based on line directly above!
-                gamePet.decay();
+                //for(int i=0; i<3600; i++) {
+                    gamePet.decay();
+                //}
                 lastTime += 1;
             }
             lastTime = currentTime;
@@ -362,10 +364,6 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
             filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
             filehandle.writeString(Boolean.toString(isDead) + "\n", true);
-
-            for(int i=0; i<3600; i++) {       //This loop is to accelerate time for testing.
-                gamePet.decay();
-            }
         }
 
         if (!gamePet.isAlive() && !isDead){  //Sets isDead boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
