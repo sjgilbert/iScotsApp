@@ -83,6 +83,8 @@ public class GameScreen extends ScreenAdapter {
         redBar = Assets.redBar;
         blackBar = Assets.blackBar;
 
+        resetButton = Assets.resetButton;
+
         //settingsButton = Assets.settingsButton;     //Upper right
 
         playBounds = new Rectangle(-150, -450, 75, 150);    //lower left
