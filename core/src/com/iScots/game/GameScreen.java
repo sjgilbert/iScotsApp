@@ -136,14 +136,15 @@ public class GameScreen extends ScreenAdapter {
             } else {
                 System.out.println(touchPoint);     //For testing.
             }
-            if (currentTime - lastButtonTime > 5) {  //Makes the button shrink back down after 5 seconds.
-                playButton = false;
-                eatButton = false;
-                sleepButton = false;
-            }
+        }
+        if (currentTime - lastButtonTime > 5) {  //Makes the button shrink back down after 5 seconds.
+            playButton = false;
+            eatButton = false;
+            sleepButton = false;
+
         }
 
-        checkAndHandleCooldowns();
+        //checkAndHandleCooldowns();
     }
 
     private void checkAndHandleCooldowns() {
@@ -258,15 +259,45 @@ public class GameScreen extends ScreenAdapter {
         //This if is to trigger the message that pops up on death.  Currently the else is the tail animation.
         if(gamePet.isAlive()) {
             Tail tail = new Tail(100, 100);  //Creates new Tail object.
-            tail.update((game.currentTailTime - game.lastTailTime)); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
-            TextureRegion keyFrame = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);  //Calls animation image based on the established statetime.
-            game.getBatch().draw(keyFrame, 18, -115, 22, 105);  //Position of the tail
-            if (!eatButton && playButton && sleepButton) {  //Making sure the blink animation does not interfere with other animations.
+            gamePet.updateTailSpeed();  //Sets the tail to wag according to happiness
+            tail.update((game.currentAnimTime - game.lastAnimTime)); //I'm not sure of the difference between game.currentTime and currentTime, but only game.currentTime works
+            TextureRegion keyFrameTail = Assets.tailAnim.getKeyFrame(tail.stateTime, Animation.ANIMATION_LOOPING);  //Calls animation image based on the established statetime.
+            game.getBatch().draw(keyFrameTail, 18, -115, 22, 105);  //Position of the tail
+            /**if (!eatButton && playButton && sleepButton) {  //Making sure the blink animation does not interfere with other animations.
                 Blink blink = new Blink(100, 100);
-                blink.update(game.currentTailTime - game.lastTailTime);
+                blink.update(game.currentAnimTime - game.lastAnimTime);
                 TextureRegion keyFrame1 = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
                 game.getBatch().draw(keyFrame1, -25, 20, 10, 30);
                 game.getBatch().draw(keyFrame1, -8, 25, 10, 30);
+            }*/
+            //Cooldown animations
+            if (!playButton && !eatButton && !sleepButton) {
+                //draw the pet based on its happiness if no button is pressed
+                game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
+                Blink blink = new Blink(100, 100); //also draw the blink
+                blink.update(game.currentAnimTime - game.lastAnimTime);
+                TextureRegion keyFrameBlink = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
+                game.getBatch().draw(keyFrameBlink, -25, 20, 10, 30);
+                game.getBatch().draw(keyFrameBlink, -8, 25, 10, 30);
+
+            }
+            if (playButton){
+                CoolDown play = new CoolDown(100, 100); //cooldown animation of pet playing
+                play.update(game.currentAnimTime - game.lastAnimTime);
+                TextureRegion keyFramePlay = Assets.playAnim.getKeyFrame(play.stateTime, Animation.ANIMATION_LOOPING);
+                game.getBatch().draw(keyFramePlay, -100, -400, 200, 800);
+            }
+            else if (eatButton){
+                CoolDown eat = new CoolDown(100, 100); //cooldown animation of pet eating
+                eat.update(game.currentAnimTime - game.lastAnimTime);
+                TextureRegion keyFrameEat = Assets.eatAnim.getKeyFrame(eat.stateTime, Animation.ANIMATION_LOOPING);
+                game.getBatch().draw(keyFrameEat, -100, -400, 200, 800);
+            }
+            else if (sleepButton){
+                CoolDown sleep = new CoolDown(100, 100); //cooldown animation of pet sleeping
+                sleep.update(game.currentAnimTime - game.lastAnimTime);
+                TextureRegion keyFrameSleep = Assets.sleepAnim.getKeyFrame(sleep.stateTime, Animation.ANIMATION_LOOPING);
+                game.getBatch().draw(keyFrameSleep, -100, -400, 200, 800);
             }
         }
 
@@ -289,36 +320,6 @@ public class GameScreen extends ScreenAdapter {
         }
         else if (sleepButton && gamePet.isAlive()){
             game.getBatch().draw(Assets.bed, 50, -450, 100, 300);
-        }
-
-        //cooldown animations
-        if (!playButton && !eatButton && !sleepButton && gamePet.isAlive()) {
-            //draw the pet based on its happiness if no button is pressed
-            game.getBatch().draw(gamePet.getPetImage(), -100, -400, 200, 800);
-            Blink blink = new Blink(100, 100); //also draw the blink
-            blink.update(game.currentTailTime - game.lastTailTime + 12);
-            TextureRegion keyFrame1 = Assets.blinkAnim.getKeyFrame(blink.stateTime, Animation.ANIMATION_LOOPING);
-            game.getBatch().draw(keyFrame1, -25, 20, 10, 30);
-            game.getBatch().draw(keyFrame1, -8, 25, 10, 30);
-
-        }
-        else if (playButton && gamePet.isAlive()){
-            CoolDown play = new CoolDown(100, 100); //cooldown animation of pet playing
-            play.update(game.currentTailTime - game.lastTailTime);
-            TextureRegion keyFramePlay = Assets.playAnim.getKeyFrame(play.stateTime, Animation.ANIMATION_NONLOOPING);
-            game.getBatch().draw(keyFramePlay, -100, -400, 200, 800);
-        }
-        else if (eatButton && gamePet.isAlive()){
-            CoolDown eat = new CoolDown(100, 100); //cooldown animation of pet eating
-            eat.update(game.currentTailTime - game.lastTailTime);
-            TextureRegion keyFrameEat = Assets.eatAnim.getKeyFrame(eat.stateTime, Animation.ANIMATION_NONLOOPING);
-            game.getBatch().draw(keyFrameEat, -100, -400, 200, 800);
-        }
-        else if (sleepButton && gamePet.isAlive()){
-            CoolDown sleep = new CoolDown(100, 100); //cooldown animation of pet sleeping
-            sleep.update(game.currentTailTime - game.lastTailTime);
-            TextureRegion keyFrameSleep = Assets.sleepAnim.getKeyFrame(sleep.stateTime, Animation.ANIMATION_NONLOOPING);
-            game.getBatch().draw(keyFrameSleep, -100, -400, 200, 800);
         }
 
 
@@ -344,9 +345,9 @@ public class GameScreen extends ScreenAdapter {
      */
     @Override
     public void render(float delta) {
-        game.currentTailTime = System.currentTimeMillis()/1000;   //Tail-relating time variable updates.
-        if (game.currentTailTime - game.lastTailTime > 1 && gamePet.isAlive()){  //Provide time in seconds.  Change time here to adjust animation time.
-            game.lastTailTime = game.currentTailTime;
+        game.currentAnimTime = System.currentTimeMillis() / 100;   //Animation-relating time variable updates.
+        if (game.currentAnimTime - game.lastAnimTime > 100 && gamePet.isAlive()){  //Provide time in seconds.  Change time here to adjust animation time.
+            game.lastAnimTime = game.currentAnimTime;
         }
         currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
         if(currentTime - lastTime > 1) {

@@ -3,8 +3,6 @@ package com.iScots.game;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import java.util.Random;
-
 /**
  * Created by Christopher on 3/23/2015.
  * The pet for the game.  Controls all of the game logic and keeps track of the attributes.
@@ -98,6 +96,15 @@ public class Pet {
             else if (happiness < 4*100/6 && (hunger+tiredness) > 2.0*200/6) {setPetImage(Assets.pet3);}
             else if (happiness < 5*100/6 && (hunger+tiredness) > 2.5*200/6) {setPetImage(Assets.pet4);}
             else if (happiness <= 6*100/6 && (hunger+tiredness) > 3*200/6) {setPetImage(Assets.pet5);}
+        }
+
+        public void updateTailSpeed() {
+            if (happiness < 100/6 || hunger < 100/6 || tiredness < 100/6) {Assets.tailAnim.setDuration(7);}
+            else if (happiness < 2*100/6 || hunger < 2*100/6 || tiredness < 2*100/6) {Assets.tailAnim.setDuration(6);}
+            else if (happiness < 3*100/6 || hunger < 3*100/6 || tiredness < 3*100/6) {Assets.tailAnim.setDuration(5);}
+            else if (happiness < 4*100/6 && (hunger+tiredness) > 2.0*200/6) {Assets.tailAnim.setDuration(4);}
+            else if (happiness < 5*100/6 && (hunger+tiredness) > 2.5*200/6) {Assets.tailAnim.setDuration(3);}
+            else if (happiness <= 6*100/6 && (hunger+tiredness) > 3*200/6) {Assets.tailAnim.setDuration(2);}
         }
 
     public float getHunger(){

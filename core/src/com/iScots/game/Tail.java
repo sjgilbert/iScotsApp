@@ -12,10 +12,10 @@ public class Tail extends GameObject{
 
     public Tail (float x, float y) {
         super(x, y, TAIL_WIDTH, TAIL_HEIGHT);
-        stateTime = 0;  //This seems to be the amount of time that it's meant to spend in a given state.
+        stateTime = 0;  //The total time the animation has been going. Used it to figure out which keyFrame it should be at.
     }
 
     public void update (float deltaTime) {
         stateTime += deltaTime;
-    }  //I have no idea why this is +=.
+    }
 }

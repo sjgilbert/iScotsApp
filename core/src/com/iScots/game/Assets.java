@@ -101,32 +101,32 @@ public class Assets {
         tail1 = new Texture("tail1.png");
         tail2 = new Texture("tail2.png");
 
-        tailAnim = new Animation(0.2f, new TextureRegion(tail1, 370, 470, 80, 140), new TextureRegion(tail2, 370, 470, 80, 140));
+        tailAnim = new Animation(4f, new TextureRegion(tail1, 370, 470, 80, 140), new TextureRegion(tail2, 370, 470, 80, 140));
 
         blinkEye = new Texture("blinkEye.png");
         openEye = new Texture("transparent.png");
 
-        blinkAnim = new Animation (0.2f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30));
+        blinkAnim = new Animation (10f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30));
 
         eat1 = new Texture("eating1.png");
         eat2 = new Texture("eating2.png");
         eat3 = new Texture("eating3.png");
         eat4 = new Texture("eating4.png");
 
-        eatAnim = new Animation(0.15f, new TextureRegion(eat1), new TextureRegion(eat2), new TextureRegion(eat3), new TextureRegion(eat4));
+        eatAnim = new Animation(2.5f, new TextureRegion(eat1), new TextureRegion(eat2), new TextureRegion(eat3), new TextureRegion(eat4));
 
         sleep1 = new Texture("sleep1.png");
         sleep2 = new Texture("sleep2.png");
         sleep3 = new Texture("sleep3.png");
         sleep4 = new Texture("sleep4.png");
 
-        sleepAnim = new Animation(0.15f, new TextureRegion(sleep1), new TextureRegion(sleep2), new TextureRegion(sleep3), new TextureRegion(sleep4));
+        sleepAnim = new Animation(2.5f, new TextureRegion(sleep1), new TextureRegion(sleep2), new TextureRegion(sleep3), new TextureRegion(sleep4));
 
         play1 = new Texture("play1.png");
         play2 = new Texture("play2.png");
         play3 = new Texture("play3.png");
 
-        playAnim = new Animation(0.15f, new TextureRegion(play1), new TextureRegion(play2), new TextureRegion(play3));
+        playAnim = new Animation(2.5f, new TextureRegion(play1), new TextureRegion(play2), new TextureRegion(play1), new TextureRegion(play3));
 
         deathMessage = new Texture("deathmessage.png");
 

@@ -15,7 +15,7 @@ public class Blink extends GameObject{
     }
 
     public void update (float deltaTime) {
-        stateTime = deltaTime;
+        stateTime += deltaTime;
     }  //I have no idea why this is +=.
 
 }

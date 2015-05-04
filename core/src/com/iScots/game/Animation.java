@@ -11,14 +11,14 @@ public class Animation {
     public static final int ANIMATION_NONLOOPING = 1;
 
     final TextureRegion[] keyFrames;
-    final float frameDuration;
+    private float frameDuration;
 
     public Animation (float frameDuration, TextureRegion... keyFrames) {
         this.frameDuration = frameDuration;
         this.keyFrames = keyFrames;
     }
 
-    public TextureRegion getKeyFrame (float stateTime, int mode) {
+    public TextureRegion getKeyFrame (float stateTime, int mode) {  //Gives the appropriate frame to display based on the time the animation has been running, the time that should be spent in each frame, and the total number of frames
         int frameNumber = (int)(stateTime / frameDuration);
 
         if (mode == ANIMATION_NONLOOPING) {
@@ -28,4 +28,9 @@ public class Animation {
         }
         return keyFrames[frameNumber];
     }
+
+    public void setDuration(float frameDuration) {  //Sets the duration the animation spends on each frame
+        this.frameDuration = frameDuration;
+    }
+
 }

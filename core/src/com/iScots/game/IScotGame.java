@@ -11,8 +11,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class IScotGame extends Game {
     private SpriteBatch batch;  //The SpriteBatch used to draw all the graphics for the game.
 
-    public long currentTailTime; //for the tail-wagging animation
-    public long lastTailTime;
+    public long currentAnimTime; //Time for the animations
+    public long lastAnimTime;
 
 
     //The three screens for the game.
@@ -34,8 +34,8 @@ public class IScotGame extends Game {
         //Setting the initial screen
         setScreen(gameScreen);
 
-        lastTailTime = System.currentTimeMillis()/1000;     //for tail-wagging
-        currentTailTime = System.currentTimeMillis()/1000;
+        lastAnimTime = System.currentTimeMillis()/100;    //For the animations
+        currentAnimTime = System.currentTimeMillis()/100;
 
     }
 
