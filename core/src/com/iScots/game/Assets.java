@@ -61,6 +61,7 @@ public class Assets {
     public static Animation playAnim;
 
     public static Texture deathMessage;
+    public static Texture timerMessage;
 
     /**
      *Loads in all the assets when the app starts.
@@ -106,7 +107,7 @@ public class Assets {
         blinkEye = new Texture("blinkEye.png");
         openEye = new Texture("transparent.png");
 
-        blinkAnim = new Animation (10f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30));
+        blinkAnim = new Animation (6f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30)); //
 
         eat1 = new Texture("eating1.png");
         eat2 = new Texture("eating2.png");
@@ -129,6 +130,7 @@ public class Assets {
         playAnim = new Animation(2.5f, new TextureRegion(play1), new TextureRegion(play2), new TextureRegion(play1), new TextureRegion(play3));
 
         deathMessage = new Texture("deathmessage.png");
+        timerMessage = new Texture("timermessage.png");
 
     }
 }
