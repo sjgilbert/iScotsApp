@@ -3,6 +3,8 @@ package com.iScots.game;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.Calendar;
+
 /**
  * Created by Christopher on 3/23/2015.
  * The pet for the game.  Controls all of the game logic and keeps track of the attributes.
@@ -16,6 +18,20 @@ public class Pet {
     //The image of the pet currently being displayed
     private Texture petImage;
 
+    private static final long SIX = 21600;
+    private static final long SEVEN = 25200;
+    private static final long EIGHT = 28800;
+    private static final long NINE = 32400;
+    private static final long TEN = 36000;
+    private static final long ELEVEN = 39600;
+    private static final long NOON = 43200;
+    private static final long ONE_PM = 46800;
+    private static final long TWO_PM = 50400;
+    private static final long FIVE_PM = 61200;
+    private static final long EIGHT_PM = 72000;
+    private static final long NINE_PM = 75600;
+    private static final long TEN_PM = 79200;
+    private static final long ELEVEN_PM = 82800;
     /**
      * Currently initializing to testing values.
      */
@@ -26,6 +42,19 @@ public class Pet {
         this.petImage = Assets.pet5;
     }
 
+    //for the offset time idea found at http://stackoverflow.com/questions/6476065/how-to-get-the-number-of-milliseconds-elapsed-so-far-today
+    public long timeOfDay() {
+        Calendar cal = Calendar.getInstance();
+        long offset = cal.get(Calendar.ZONE_OFFSET) + cal.get(Calendar.DST_OFFSET);
+        return ((System.currentTimeMillis()+offset)%86400000)/1000;  //returns the current time of day in seconds
+    }
+
+    public float amp(float att) {
+        if(att<100/5) {return 2.1f;}
+        else if(att<2*100/5) {return 1.8f;}
+        else if(att<2.5*100/5) {return 1.2f;}
+        else return 1;
+    }
     //The decay is based on the formula for compound interest.
     public void decay() {
         if (tiredness > 0.5) { tiredness = tiredness*0.99995f;}
@@ -34,8 +63,22 @@ public class Pet {
         updateState();
     }
 
-    public void sleep() {
-        tiredness += 25;
+    public void sleep() {   //TOO EARLY TO SLEEP
+        if(timeOfDay() < NOON && timeOfDay() >SEVEN){
+            tiredness += amp(tiredness)*10;
+            happiness -= 5;
+        }                       //IDEAL BEDTIME
+        else if(timeOfDay() < ELEVEN_PM && timeOfDay() > NINE_PM){
+            tiredness += amp(tiredness)*25;
+            happiness += amp(happiness)*10;
+        }                   //NAPTIME
+        else if(timeOfDay() > NOON && timeOfDay() > FIVE_PM) {
+            tiredness += amp(tiredness)*20;
+            happiness += amp(happiness)*5;
+        }
+        else {
+            tiredness += amp(tiredness)*15;
+        }
         if (tiredness > 100) {
             tiredness = 100;
         } else if (tiredness < .5) {
@@ -44,8 +87,21 @@ public class Pet {
         updateState();
     }
 
-    public void feed() {
-        hunger += 10;
+    public void feed() {//LUNCH                                             BREAKFAST                       DINNER
+        if(timeOfDay()> ELEVEN && timeOfDay() < ONE_PM || timeOfDay() > SIX && timeOfDay() < NINE || timeOfDay() > FIVE_PM && timeOfDay() < EIGHT_PM){
+            hunger += amp(hunger)*15;
+            happiness += amp(happiness)*5;
+        }           //BAD TIMES TO EAT
+        else if(timeOfDay() < SIX || timeOfDay() > TEN_PM) {
+            hunger += amp(hunger)*5;
+            happiness -= 5;
+            tiredness -= 8;
+        }
+        else {
+            hunger += amp(hunger)*10;
+            happiness += amp(happiness)*3;
+            tiredness += amp(tiredness)*4;
+        }
         if (hunger > 100) {
             hunger = 100;
         } else if (hunger < .5) {
@@ -54,8 +110,17 @@ public class Pet {
         updateState();
     }
 
-    public void play() {
-        happiness += 3;
+    public void play() {    //IDEAL PLAYTIME
+        if(timeOfDay() > SIX && timeOfDay() > NINE_PM) {
+            happiness += amp(happiness)*5;
+            tiredness -= 3;
+            hunger -= 1;
+        }
+        else {
+            happiness += amp(happiness)*4;
+            tiredness -= 4;
+            hunger -= 1;
+        }
         if (happiness > 100) {
             happiness = 100;
         } else if (happiness < .5) {

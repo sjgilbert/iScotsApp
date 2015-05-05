@@ -43,9 +43,9 @@ public class GameScreen extends ScreenAdapter {
     private Texture fatigueLabel; //credit to Melonnie Manohar: https://thenounproject.com/Melonnie/
 
     //The variables needed for cooldowns
-    private static final double PLAY_TIME = 3;
-    private static final double EAT_TIME = 10;
-    private static final double SLEEP_TIME = 60;
+    private static final double PLAY_TIME = 1;
+    private static final double EAT_TIME = 2;
+    private static final double SLEEP_TIME = 4;
 
     private double actionTime;
 
@@ -63,7 +63,7 @@ public class GameScreen extends ScreenAdapter {
     private double lastTime;  //Last time the stats were updated.
 
     //Death stuff.
-    private boolean isDeadKnown;  //For use with certain functions.
+    private boolean petInHospital;  //For use with certain functions.
     private double timeOfDeath;  //Records exact time of death.
 
     /**
@@ -104,7 +104,7 @@ public class GameScreen extends ScreenAdapter {
             gamePet.setHunger(Float.parseFloat(strings[2])); //Sets previous tiredness.
             gamePet.setTiredness(Float.parseFloat(strings[3]));
             timeOfDeath = Double.valueOf(strings[4]);
-            isDeadKnown = Boolean.valueOf(strings[5]);
+            petInHospital = Boolean.valueOf(strings[5]);
         } catch (Throwable e) {
         }
         happinessLabel = new Texture("happiness.png");
@@ -200,10 +200,10 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void reset() {
-        gamePet.setHappiness(60);
-        gamePet.setHunger(60);
-        gamePet.setTiredness(60);
-        isDeadKnown = false;
+        gamePet.setHappiness(75);
+        gamePet.setHunger(80);
+        gamePet.setTiredness(70);
+        petInHospital = false;
     }
 
     private void drawStatusBars() {
@@ -324,7 +324,6 @@ public class GameScreen extends ScreenAdapter {
             game.getBatch().draw(Assets.deathMessage, -50, 0, 100, 100);
             game.getBatch().draw(Assets.redBar, -50, -100, 100, 100);
             game.getBatch().draw(Assets.greenBar, -50, -100, (int) (100 *(currentTime-timeOfDeath)/86400), 100);
-            System.out.println(currentTime-timeOfDeath);
         }
 
         game.getBatch().end();
@@ -349,9 +348,9 @@ public class GameScreen extends ScreenAdapter {
         currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
         if(currentTime - lastTime > 1) {
             while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed.  Note: Adjust based on line directly above!
-                //for(int i=0; i<3600; i++) {
+                for(int i=0; i<300; i++) {
                     gamePet.decay();
-                //}
+                }
                 lastTime += 1;
             }
             lastTime = currentTime;
@@ -362,19 +361,16 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
             filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
             filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
-            filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
+            filehandle.writeString(Boolean.toString(petInHospital) + "\n", true);
 
-            //for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
-                gamePet.decay();
-            //}
-            filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
+            filehandle.writeString(Boolean.toString(petInHospital) + "\n", true);
         }
 
-        if (!gamePet.isAlive() && !isDeadKnown){  //Sets isDeadKnown boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
+        if (!gamePet.isAlive() && !petInHospital){  //Sets petInHospital boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
             timeOfDeath = currentTime;
-            isDeadKnown = true;
+            petInHospital = true;
         }
-        if (isDeadKnown && currentTime - timeOfDeath > 86400){
+        if (petInHospital && currentTime - timeOfDeath > 86400){
             System.out.println("Refresh dead pet.");
             reset();
         }
