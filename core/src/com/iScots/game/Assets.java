@@ -107,7 +107,7 @@ public class Assets {
         blinkEye = new Texture("blinkEye.png");
         openEye = new Texture("transparent.png");
 
-        blinkAnim = new Animation (10f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30));
+        blinkAnim = new Animation (6f, new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(openEye, 0, 0, 30, 30), new TextureRegion(blinkEye, 0, 0, 30, 30)); //
 
         eat1 = new Texture("eating1.png");
         eat2 = new Texture("eating2.png");
