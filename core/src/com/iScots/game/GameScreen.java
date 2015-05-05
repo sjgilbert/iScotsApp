@@ -38,9 +38,9 @@ public class GameScreen extends ScreenAdapter {
 
     private Texture resetButton;
 
-    private Texture happinessLabel;
-    private Texture hungerLabel;
-    private Texture fatigueLabel;
+    private Texture happinessLabel; //credit to Wilson Joseph: https://thenounproject.com/wilsonjoseph/
+    private Texture hungerLabel; //credit to Mister Pixel: https://thenounproject.com/MisterPixel/
+    private Texture fatigueLabel; //credit to Melonnie Manohar: https://thenounproject.com/Melonnie/
 
     //The variables needed for cooldowns
     private static final double PLAY_TIME = 3;
@@ -364,9 +364,9 @@ public class GameScreen extends ScreenAdapter {
             filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
             filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
 
-            for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
+            //for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
                 gamePet.decay();
-            }
+            //}
             filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
         }
 
