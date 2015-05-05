@@ -113,10 +113,7 @@ public class GameScreen extends ScreenAdapter {
     }
 
     /**
-     * The update method used for handling all user input.  The first conditional triggers
-     * only when there is a touch, then determines whether an action has been selected.
-     * If one has, the update method is called for the pet, with the appropriate action
-     * passed as a parameter.
+     * The update method used for handling all user input.  Conditionals here are used to update time and call relevant methods.
      */
     public void update() {
         game.currentAnimTime = System.currentTimeMillis() / 100;   //Animation-relating time variable updates.
