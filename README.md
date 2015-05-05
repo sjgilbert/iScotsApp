@@ -9,6 +9,7 @@
 * @pickUp @all Look at and fix up documentation.
 * @clf Change "hospital notification" so that it is a larger size and readable on the screen.
 * @clf Edit red/green bar on "hospital notification."
+* @all Clean up your code. Specifically, Update and Draw methods in GameScreen.
 
 ##Known Bugs + Issues
 * #p1 blinks + tail wagging occur at the same time (cs)
