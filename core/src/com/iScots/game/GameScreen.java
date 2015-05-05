@@ -137,22 +137,7 @@ public class GameScreen extends ScreenAdapter {
             reset();
         }
         if (Gdx.input.justTouched()) {
-            playButton = false;   //Setting them false here means that they get updated the next time the screen is touched, which lets players see what they're doing..
-            eatButton = false;
-            sleepButton = false;
-            guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
-
-            if (playBounds.contains(touchPoint.x, touchPoint.y)) {
-                playWithPet();
-            } else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
-                feedPet();
-            } else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
-                restPet();
-            } else if (resetBounds.contains(touchPoint.x, touchPoint.y)) {  //Used for reset button only if pet is dead.
-                reset();
-            } else {
-                System.out.println(touchPoint);     //For testing.
-            }
+            triggerAnimation();
         }
         if (currentTime - lastButtonTime > .10) {  //Makes the button shrink back down after .10 seconds.
             playButton = false;
@@ -162,6 +147,25 @@ public class GameScreen extends ScreenAdapter {
         }
 
         checkAndHandleCooldowns();
+    }
+
+    private void triggerAnimation(){
+        playButton = false;   //Setting them false here means that they get updated the next time the screen is touched, which lets players see what they're doing..
+        eatButton = false;
+        sleepButton = false;
+        guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+        if (playBounds.contains(touchPoint.x, touchPoint.y)) {
+            playWithPet();
+        } else if (eatBounds.contains(touchPoint.x, touchPoint.y)) {
+            feedPet();
+        } else if (sleepBounds.contains(touchPoint.x, touchPoint.y)) {
+            restPet();
+        } else if (resetBounds.contains(touchPoint.x, touchPoint.y)) {  //Used for reset button only if pet is dead.
+            reset();
+        } else {
+            System.out.println(touchPoint);     //For testing.
+        }
     }
 
     private void saveAndUpdate(){  //updates stats and writes them to external file.
