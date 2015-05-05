@@ -7,6 +7,8 @@
 * @clf get app on an actual Android device (instructions for deploying are http://developer.android.com/training/basics/firstapp/running-app.html)
 * @pickUp @all Testing. Testing. Testing.
 * @pickUp @all Look at and fix up documentation.
+* @clf Change "hospital notification" so that it is a larger size and readable on the screen.
+* @clf Edit red/green bar on "hospital notification."
 
 ##Known Bugs + Issues
 * #p1 blinks + tail wagging occur at the same time (cs)
