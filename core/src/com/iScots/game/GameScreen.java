@@ -119,6 +119,41 @@ public class GameScreen extends ScreenAdapter {
      * passed as a parameter.
      */
     public void update() {
+        game.currentAnimTime = System.currentTimeMillis() / 100;   //Animation-relating time variable updates.
+        if (game.currentAnimTime - game.lastAnimTime > 100 && gamePet.isAlive()){  //Provide time in seconds.  Change time here to adjust animation time.
+            game.lastAnimTime = game.currentAnimTime;
+        }
+        currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
+        if(currentTime - lastTime > 1) {
+            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed.  Note: Adjust based on line directly above!
+                //for(int i=0; i<3600; i++) {
+                gamePet.decay();
+                //}
+                lastTime += 1;
+            }
+            lastTime = currentTime;
+            //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
+            FileHandle filehandle = Gdx.files.local(".IScotGame");
+            filehandle.writeString(Double.toString(lastTime) + "\n", false); //"False" means that this overwrites previous local file in that location.
+            filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
+            filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
+            filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
+            filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
+            filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
+
+            //for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
+            gamePet.decay();
+            //}
+        }
+
+        if (!gamePet.isAlive() && !isDeadKnown){  //Sets isDeadKnown boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
+            timeOfDeath = currentTime;
+            isDeadKnown = true;
+        }
+        if (isDeadKnown && currentTime - timeOfDeath > 86400){
+            System.out.println("Refresh dead pet.");
+            reset();
+        }
         if (Gdx.input.justTouched()) {
             playButton = false;   //Setting them false here means that they get updated the next time the screen is touched, which lets players see what they're doing..
             eatButton = false;
@@ -199,7 +234,7 @@ public class GameScreen extends ScreenAdapter {
         }
     }
 
-    private void reset() {
+    private void reset() {  //resets the pet to basic standards.
         gamePet.setHappiness(60);
         gamePet.setHunger(60);
         gamePet.setTiredness(60);
@@ -321,10 +356,10 @@ public class GameScreen extends ScreenAdapter {
 
 
         if (!gamePet.isAlive()){  //Images are drawn in order.  I am therefore placing this here for adjustments to be made after pet death.
-            game.getBatch().draw(Assets.deathMessage, -50, 0, 100, 100);
-            game.getBatch().draw(Assets.redBar, -50, -100, 100, 100);
-            game.getBatch().draw(Assets.greenBar, -50, -100, (int) (100 *(currentTime-timeOfDeath)/86400), 100);
-            System.out.println(currentTime-timeOfDeath);
+            game.getBatch().draw(Assets.deathMessage, -100, -100, 200, 200);
+            game.getBatch().draw(Assets.redBar, -100, -200, 200, 100);
+            game.getBatch().draw(Assets.greenBar, -100, -200, (int) (200 *(currentTime-timeOfDeath)/86400), 100);
+            game.getBatch().draw(Assets.timerMessage, -100, -200, 200, 100);
         }
 
         game.getBatch().end();
@@ -336,48 +371,13 @@ public class GameScreen extends ScreenAdapter {
     }
 
     /**
-     * //TODO: Christopher please comment!
+     *
      *
      * @param delta
      */
     @Override
     public void render(float delta) {
-        game.currentAnimTime = System.currentTimeMillis() / 100;   //Animation-relating time variable updates.
-        if (game.currentAnimTime - game.lastAnimTime > 100 && gamePet.isAlive()){  //Provide time in seconds.  Change time here to adjust animation time.
-            game.lastAnimTime = game.currentAnimTime;
-        }
-        currentTime = System.currentTimeMillis()/1000;   //Provide time in seconds.
-        if(currentTime - lastTime > 1) {
-            while(currentTime - lastTime > 1) { //The loop that decays based on how much time has passed.  Note: Adjust based on line directly above!
-                //for(int i=0; i<3600; i++) {
-                    gamePet.decay();
-                //}
-                lastTime += 1;
-            }
-            lastTime = currentTime;
-            //Writes current time to external file to be pulled on next restart.  Can be updated to include other stats.
-            FileHandle filehandle = Gdx.files.local(".IScotGame");
-            filehandle.writeString(Double.toString(lastTime) + "\n", false); //"False" means that this overwrites previous local file in that location.
-            filehandle.writeString(Float.toString(gamePet.getHappiness()) + "\n", true);  //"True" means that this is appended to local file.
-            filehandle.writeString(Float.toString(gamePet.getHunger()) + "\n", true);
-            filehandle.writeString(Float.toString(gamePet.getTiredness()) + "\n", true);
-            filehandle.writeString(Double.toString(timeOfDeath) + "\n", true);
-            filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
 
-            //for(int i=0; i<3600; i++) {       //This loop is to simulate an hour every second for testing.
-                gamePet.decay();
-            //}
-            filehandle.writeString(Boolean.toString(isDeadKnown) + "\n", true);
-        }
-
-        if (!gamePet.isAlive() && !isDeadKnown){  //Sets isDeadKnown boolean so that this doesn't trip every time.  Note that due to this, death clock will start from when they open the app.
-            timeOfDeath = currentTime;
-            isDeadKnown = true;
-        }
-        if (isDeadKnown && currentTime - timeOfDeath > 86400){
-            System.out.println("Refresh dead pet.");
-            reset();
-        }
 
         update();
         draw();
