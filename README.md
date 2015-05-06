@@ -10,4 +10,5 @@
 
 ##Future Implementation Options
 * settings + launch screen pages
-* djust settings bars so that icons do not interfere with actual status bar.
+* adjust settings bars so that icons do not interfere with actual status bar.
+* add additional attributes. These could be general housekeeping ones such as hygeine, or more fun ones like "majors" or "bagpipes."
